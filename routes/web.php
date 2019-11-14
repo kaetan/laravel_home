@@ -13,3 +13,8 @@
 
 Route::get('/', 'ArticleController@index')->name('home');
 Route::get('/articles/{id}', 'ArticleController@show')->name('article.show');
+Route::post('/comment', 'CommentController@store')->name('comment.post');
+
+Auth::routes();
+
+Route::get('/home', 'ArticleController@index')->name('home');
