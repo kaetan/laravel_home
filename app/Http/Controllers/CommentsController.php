@@ -3,29 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comment;
 use App\Article;
+use Auth;
 
-class ArticleController extends Controller
+class CommentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        $articles = Article::all();
-        return view('articles.index')->with('articles', $articles);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $this->middleware('auth');
     }
 
     /**
@@ -36,19 +22,14 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $comment = new Comment();
+        $comment->text = $request->text;
+        $comment->user()->associate(Auth::id());
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $article = Article::findOrFail($id);
-        return view('articles.show')->with('article', $article);
+        $article = Article::findOrFail($request->article_id);
+        $article->comments()->save($comment);
+
+        return redirect()->route('article.show', $article->id);
     }
 
     /**

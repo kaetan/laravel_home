@@ -8,6 +8,8 @@
   <title>Laravel Home</title>
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
   <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
+  <script src="{{ asset('js/app.js') }}" defer></script>
+
 </head>
 
 <body>

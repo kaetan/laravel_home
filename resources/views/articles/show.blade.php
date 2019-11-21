@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('content')
-<div class="container">
+<div id="article-{{ $article->id }}" class="article container py-4">
   <div class="row">
     <div class="col-9 mx-auto">
       <a href="/" class="d-block mt-3">Back to index</a>
@@ -23,18 +23,24 @@
   </div>
   <div class="row">
     <div class="col-9 mx-auto">
-      @foreach (collect($article->comments)->sortByDesc('id') as $comment)
-      <div class="card mb-3">
-        <div class="card-body">
-          <p class="card-text small text-muted">
-            {{ $comment->user->name }} wrote {{ $comment->created_at->diffForHumans() }}
-          </p>
-          <p class="card-text lead">
-            {{ $comment->text }}
-          </p>
+      <div id="test" class="comments">
+        @foreach (collect($article->comments()->latest('id')->take(5)->get())->sortByDesc('id') as $comment)
+        <div id="comment-{{ $comment->id }}" class="comment card mb-3">
+          <div class="card-body">
+            <p class="card-text small text-muted">
+              {{ $comment->user->name }} wrote {{ $comment->created_at->diffForHumans() }}
+            </p>
+            <p class="card-text lead">
+              {{ $comment->text }}
+            </p>
+          </div>
         </div>
+        @endforeach
       </div>
-      @endforeach
+      <div class="my-4">
+        <button class="btn btn-success js-load-comments">Load more</button>
+        <img id="loader" class="js-loader-gif my-2 mx-auto d-none" src="/img/ajax-loader.gif" alt="">
+      </div>
     </div>
   </div>
 </div>
