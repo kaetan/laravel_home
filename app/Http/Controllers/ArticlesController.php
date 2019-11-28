@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Article;
 use App\Comment;
 use App\User;
+use View;
 
 class ArticlesController extends Controller
 {
@@ -50,32 +51,41 @@ class ArticlesController extends Controller
     public function show($id)
     {
         $article = Article::findOrFail($id);
-        $comments = $article->comments()->skip(0)->take(5)->get();
-        return view('articles.show')->with('article', $article);
+
+        $lastCommentId = $article->comments()->latest('id')->first()->id;
+        $offset = $lastCommentId + 1;
+
+        $comments = $article->loadComments($article, $offset, 5);
+
+        $view = View::make('_partials\comments', [
+            'comments' => $comments,
+        ]);
+
+        return view('articles.show')->with([
+            'article' => $article,
+            'view' => $view,
+        ]);
     }
 
     /**
      * Load more comments
      * 
      * @param int $id
-     * @return 
+     * @param int $offset
+     * 
+     * @return json object
      */
     public function load($id, $offset)
     {
         $article = Article::findOrFail($id);
-        $comments = $article->comments()
-            ->where('id', '<', $offset)
-            ->latest('id')
-            ->take(5)
-            ->get()
-            ->sortByDesc('id');
 
-        foreach ($comments as $comment) {
-            $comment->author = User::find($comment->user_id)->name;
-            $comment->date = $comment->created_at->diffForHumans();
-        }
+        $comments = $article->loadComments($article, $offset, 5);
 
-        return $comments;
+        $view = (string) View::make('_partials\comments', [
+            'comments' => $comments,
+        ]);
+
+        return json_encode($view);
     }
 
     /**
