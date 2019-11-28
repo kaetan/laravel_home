@@ -24,11 +24,23 @@
     <div class="row">
         <div class="col-9 mx-auto">
             <div id="test" class="comments">
-                {!! $view !!}
+                @include('_partials.comments')
             </div>
-            <div class="my-4">
-                <button class="btn btn-success js-load-comments">Load more</button>
-                <img id="loader" class="js-loader-gif my-2 mx-auto d-none" src="/img/ajax-loader.gif" alt="">
+            <div class="d-flex flex-row align-items-center my-4">
+                <div class="">
+                    <button class="btn btn-success js-load-comments ">Load more</button>
+                </div>
+                <div class="px-2">
+                    <div id="loader" class="lds-ellipsis">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="no-more-comments">
+                    <span class="text-success">No more comments to show!</span>
+                </div>
             </div>
         </div>
     </div>

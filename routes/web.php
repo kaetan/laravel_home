@@ -19,4 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'ArticlesController@index')->name('home');
 
-Route::get('/articles/{id}/load/{offset}', 'ArticlesController@load')->name('article.load');
+Route::get('/articles/{id}/{offset}', 'ArticlesController@load')->name('article.load');

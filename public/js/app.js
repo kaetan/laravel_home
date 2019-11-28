@@ -1,24 +1,64 @@
 $(document).ready(function () {
-    document.querySelector('.js-load-comments').addEventListener('click', loadComments);
+    const loadBtn = $(".js-load-comments");
 
-    const loadBtn = document.querySelector('.js-load-comments');
-    const article = document.querySelector('.article').id.slice(8);
-    let offset = document.querySelector('.comments').lastElementChild.id.slice(8);
+    if (loadBtn.length > 0) {
+        // находим и прячем анимацию загрузки и сообщение о закончившихся комментах
+        var loader = $("#loader");
+        loader.hide();
+        var noMoreComments = $(".no-more-comments");
+        noMoreComments.hide();
 
-    loadBtn.setAttribute('data-offset', offset);
-    loadBtn.setAttribute('data-article', article);
+        // получаем id статьи и id последнего отображаемого коммента
+        const article = $(".article").attr("id").slice(8);
+        var offset = $(".comments").children().last().attr("id").slice(8);
 
-    async function loadComments(e) {
-        let url = `/articles/${article}/load/${offset}`;
-        let response = await fetch(url);
+        // заряжаем кнопку загрузки полученными выше атрибутами
+        loadBtn.attr('data-offset', offset);
+        loadBtn.attr('data-article', article);
 
-        let view = await response.json();
+        // вешаем эвент на нажатие кнопки
+        loadBtn.click(loadComments);
 
-        $(".comments").append(view);
+        function loadComments() {
+            var view;
+            var url = `/articles/${article}/${offset}`;
 
-        offset = document.querySelector('.comments').lastElementChild.id.slice(8);
-        loadBtn.setAttribute('data-offset', offset);
+            const xhr = new XMLHttpRequest();
 
-        e.preventDefault();
+            xhr.open('GET', url, true);
+
+            xhr.onloadstart = function () {
+                loadBtn.hide();
+                loader.show();
+            };
+
+            xhr.onloadend = function () {
+                loader.hide();
+                loadBtn.show();
+            };
+
+            xhr.onload = function () {
+                if (this.status === 200) {
+                    // получаем html
+                    view = JSON.parse(this.response);
+
+                    if (view.success == true) {
+                        if (view.view) {
+                            // прикрепляем полученный html к блоку комментов
+                            $(".comments").append(view.view);
+
+                            // обновляем id последнего отображаемого коммента и передаем его в кнопку
+                            offset = $(".comments").children().last().attr("id").slice(8);
+                            loadBtn.attr('data-offset', offset);
+                        } else {
+                            noMoreComments.fadeIn(300);
+                            noMoreComments.fadeOut(4000);
+                        }
+                    }
+                }
+            }
+
+            xhr.send();
+        }
     }
 });

@@ -33,7 +33,6 @@ class Article extends Model
             ->take($limit)
             ->get()
             ->sortByDesc('id');
-        //$comments = $this->commentService->getCommentsQuery($article, $offset, $limit);
         return $comments;
     }
 }

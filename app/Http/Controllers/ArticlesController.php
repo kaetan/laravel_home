@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\CommentsService;
 use App\Article;
 use App\Comment;
 use App\User;
@@ -57,13 +58,9 @@ class ArticlesController extends Controller
 
         $comments = $article->loadComments($article, $offset, 5);
 
-        $view = View::make('_partials\comments', [
-            'comments' => $comments,
-        ]);
-
         return view('articles.show')->with([
             'article' => $article,
-            'view' => $view,
+            'comments' => $comments,
         ]);
     }
 
@@ -77,15 +74,12 @@ class ArticlesController extends Controller
      */
     public function load($id, $offset)
     {
+        $limit = 10;
+
         $article = Article::findOrFail($id);
+        $response = CommentsService::getComments($article, $offset, $limit);
 
-        $comments = $article->loadComments($article, $offset, 5);
-
-        $view = (string) View::make('_partials\comments', [
-            'comments' => $comments,
-        ]);
-
-        return json_encode($view);
+        return $response;
     }
 
     /**
