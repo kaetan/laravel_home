@@ -4,7 +4,7 @@ $(document).ready(function () {
     if (loadBtn.length > 0) {
         // находим и прячем анимацию загрузки и сообщение о закончившихся комментах
         var loader = $("#loader");
-        loader.hide();
+        //loader.hide();
         var noMoreComments = $(".no-more-comments");
         noMoreComments.hide();
 
@@ -29,12 +29,9 @@ $(document).ready(function () {
 
             xhr.onloadstart = function () {
                 loadBtn.hide();
-                loader.show();
-            };
-
-            xhr.onloadend = function () {
-                loader.hide();
-                loadBtn.show();
+                //loader.show();
+                loader.removeClass('d-none');
+                loader.addClass('d-block');
             };
 
             xhr.onload = function () {
@@ -51,12 +48,23 @@ $(document).ready(function () {
                             offset = $(".comments").children().last().attr("id").slice(8);
                             loadBtn.attr('data-offset', offset);
                         } else {
+                            console.log('test');
                             noMoreComments.fadeIn(300);
                             noMoreComments.fadeOut(4000);
                         }
                     }
                 }
             }
+
+            xhr.onloadend = function () {
+                loader.removeClass('d-block');
+                loader.addClass('d-none');
+                loadBtn.show();
+                if (view.view === "") {
+                    console.log('test2');
+                    loadBtn.hide();
+                }
+            };
 
             xhr.send();
         }

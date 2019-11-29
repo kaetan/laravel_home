@@ -13,6 +13,6 @@ class CommentsService
 
         $returnHtml = view('_partials\comments')->with('comments', $comments)->render();
 
-        return response()->json(array('success' => true, 'view' => $returnHtml));
+        return $returnHtml;
     }
 }

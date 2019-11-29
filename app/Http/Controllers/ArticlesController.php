@@ -66,20 +66,20 @@ class ArticlesController extends Controller
 
     /**
      * Load more comments
-     * 
+     *
      * @param int $id
      * @param int $offset
-     * 
+     *
      * @return json object
      */
     public function load($id, $offset)
     {
-        $limit = 10;
+        $limit = 100;
 
         $article = Article::findOrFail($id);
         $response = CommentsService::getComments($article, $offset, $limit);
 
-        return $response;
+        return response()->json(array('success' => true, 'view' => $response));
     }
 
     /**

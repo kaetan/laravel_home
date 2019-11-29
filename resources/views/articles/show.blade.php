@@ -24,14 +24,16 @@
     <div class="row">
         <div class="col-9 mx-auto">
             <div id="test" class="comments">
+
                 @include('_partials.comments')
+
             </div>
             <div class="d-flex flex-row align-items-center my-4">
                 <div class="">
                     <button class="btn btn-success js-load-comments ">Load more</button>
                 </div>
                 <div class="px-2">
-                    <div id="loader" class="lds-ellipsis">
+                    <div id="loader" class="lds-ellipsis d-none">
                         <div></div>
                         <div></div>
                         <div></div>
