@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Services\CommentsService;
 
 class Article extends Model
 {
@@ -24,9 +23,9 @@ class Article extends Model
      * 
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function loadComments($article, $offset, $limit)
+    public function loadComments($offset, $limit)
     {
-        $comments = $article
+        $comments = $this
             ->comments()
             ->where('id', '<', $offset)
             ->latest('id')

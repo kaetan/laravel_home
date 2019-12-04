@@ -2,71 +2,59 @@ $(document).ready(function () {
     const loadBtn = $(".js-load-comments");
 
     if (loadBtn.length > 0) {
-        // находим и прячем анимацию загрузки и сообщение о закончившихся комментах
+
+        // находим анимацию загрузки и сообщение о закончившихся комментах
         var loader = $("#loader");
-        //loader.hide();
         var noMoreComments = $(".no-more-comments");
-        noMoreComments.hide();
 
         // получаем id статьи и id последнего отображаемого коммента
         const article = $(".article").attr("id").slice(8);
         var offset = $(".comments").children().last().attr("id").slice(8);
 
-        // заряжаем кнопку загрузки полученными выше атрибутами
-        loadBtn.attr('data-offset', offset);
-        loadBtn.attr('data-article', article);
-
         // вешаем эвент на нажатие кнопки
-        loadBtn.click(loadComments);
-
-        function loadComments() {
-            var view;
-            var url = `/articles/${article}/${offset}`;
-
-            const xhr = new XMLHttpRequest();
-
-            xhr.open('GET', url, true);
-
-            xhr.onloadstart = function () {
-                loadBtn.hide();
-                //loader.show();
-                loader.removeClass('d-none');
-                loader.addClass('d-block');
-            };
-
-            xhr.onload = function () {
-                if (this.status === 200) {
-                    // получаем html
-                    view = JSON.parse(this.response);
-
-                    if (view.success == true) {
-                        if (view.view) {
-                            // прикрепляем полученный html к блоку комментов
-                            $(".comments").append(view.view);
-
-                            // обновляем id последнего отображаемого коммента и передаем его в кнопку
-                            offset = $(".comments").children().last().attr("id").slice(8);
-                            loadBtn.attr('data-offset', offset);
-                        } else {
-                            console.log('test');
-                            noMoreComments.fadeIn(300);
-                            noMoreComments.fadeOut(4000);
-                        }
-                    }
+        loadBtn.on('click', function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            }
+            });
 
-            xhr.onloadend = function () {
-                loader.removeClass('d-block');
-                loader.addClass('d-none');
-                loadBtn.show();
-                if (view.view === "") {
-                    console.log('test2');
+            $.ajax({
+                type: 'POST',
+                datatype: "json",
+                url: `/articles/${article}`,
+                data: {
+                    offset: offset,
+                },
+
+                beforeSend: function () {
                     loadBtn.hide();
-                }
-            };
+                    loader.removeClass('d-none');
+                },
 
-            xhr.send();
-        }
+                success: function (view) {
+                    if (view.view) {
+                        // прикрепляем полученный html к блоку комментов
+                        $(".comments").append(view.view);
+
+                        // обновляем id последнего отображаемого коммента и передаем его в кнопку
+                        offset = $(".comments").children().last().attr("id").slice(8);
+                        loadBtn.attr('data-offset', offset);
+                    } else {
+                        noMoreComments.removeClass('d-none');
+                        noMoreComments.fadeIn(200);
+                        noMoreComments.fadeOut(3000);
+
+                        console.log('and now hide mate');
+                        loadBtn.addClass('d-none');
+                    }
+                },
+
+                complete: function () {
+                    loader.addClass('d-none');
+                    loadBtn.show();
+                }
+            });
+        });
     }
 });

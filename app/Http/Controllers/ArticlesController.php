@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Services\CommentsService;
+use App\Services\CommentsHtmlService;
 use App\Article;
 use App\Comment;
 use App\User;
-use View;
 
 class ArticlesController extends Controller
 {
@@ -52,34 +51,14 @@ class ArticlesController extends Controller
     public function show($id)
     {
         $article = Article::findOrFail($id);
-
-        $lastCommentId = $article->comments()->latest('id')->first()->id;
-        $offset = $lastCommentId + 1;
-
-        $comments = $article->loadComments($article, $offset, 5);
+        $comments = $article->comments()->orderBy('id', 'desc')->take(5)->get();
+        
+        $comments = !empty($comments) ? $comments : [];
 
         return view('articles.show')->with([
             'article' => $article,
             'comments' => $comments,
         ]);
-    }
-
-    /**
-     * Load more comments
-     *
-     * @param int $id
-     * @param int $offset
-     *
-     * @return json object
-     */
-    public function load($id, $offset)
-    {
-        $limit = 100;
-
-        $article = Article::findOrFail($id);
-        $response = CommentsService::getComments($article, $offset, $limit);
-
-        return response()->json(array('success' => true, 'view' => $response));
     }
 
     /**

@@ -1,6 +1,9 @@
 @extends('template')
 
 @section('content')
+
+<?php if (!empty($article)) : ?>
+
 <div id="article-{{ $article->id }}" class="article container py-4">
     <div class="row">
         <div class="col-9 mx-auto">
@@ -24,10 +27,10 @@
     <div class="row">
         <div class="col-9 mx-auto">
             <div id="test" class="comments">
-
-                @include('_partials.comments')
-
+                @include('_partials.comments', ['comments' => $comments])
             </div>
+
+            <?php if (!empty($comments)) : ?>
             <div class="d-flex flex-row align-items-center my-4">
                 <div class="">
                     <button class="btn btn-success js-load-comments ">Load more</button>
@@ -40,11 +43,22 @@
                         <div></div>
                     </div>
                 </div>
-                <div class="no-more-comments">
+                <div class="no-more-comments d-none">
                     <span class="text-success">No more comments to show!</span>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
+
+<?php else : ?>
+
+<div class="container text-center py-5 mt-5">
+    <p class="h4">Something went wrong!</p>
+    <a href="/" class="d-block mt-3">Back to index</a>
+</div>
+
+<?php endif; ?>
+
 @endsection

@@ -5,14 +5,11 @@ namespace App\Services;
 use App\Article;
 use App\Comment;
 
-class CommentsService
+class CommentsHtmlService
 {
-    public static function getComments($article, $offset, $limit)
+    public static function getComments($comments)
     {
-        $comments = $article->loadComments($article, $offset, $limit);
-
         $returnHtml = view('_partials\comments')->with('comments', $comments)->render();
-
         return $returnHtml;
     }
 }

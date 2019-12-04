@@ -3,15 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\CommentsHtmlService;
 use App\Comment;
 use App\Article;
 use Auth;
 
 class CommentsController extends Controller
 {
-    public function __construct()
+    /**
+     * Load more comments for the article
+     *
+     * @param int $id
+     * @param int $offset
+     *
+     * @return json object
+     */
+    public function getComments(Request $request, $id)
     {
-        $this->middleware('auth');
+        $article = Article::findOrFail($id);
+        $offset = $request->offset;
+        $limit = 10;
+
+        $comments = $article->loadComments($offset, $limit);
+
+        $response = CommentsHtmlService::getComments($comments);
+
+        return response()->json(array('success' => true, 'view' => $response));
     }
 
     /**
