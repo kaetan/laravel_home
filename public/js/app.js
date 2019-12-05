@@ -32,10 +32,10 @@ $(document).ready(function () {
                     loader.removeClass('d-none');
                 },
 
-                success: function (view) {
-                    if (view.view) {
+                success: function (data) {
+                    if (data.html) {
                         // прикрепляем полученный html к блоку комментов
-                        $(".comments").append(view.view);
+                        $(".comments").append(data.html);
 
                         // обновляем id последнего отображаемого коммента и передаем его в кнопку
                         offset = $(".comments").children().last().attr("id").slice(8);

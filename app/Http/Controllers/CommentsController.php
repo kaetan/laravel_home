@@ -26,9 +26,9 @@ class CommentsController extends Controller
 
         $comments = $article->loadComments($offset, $limit);
 
-        $response = CommentsHtmlService::getComments($comments);
+        $html = CommentsHtmlService::getComments($comments);
 
-        return response()->json(array('success' => true, 'view' => $response));
+        return response()->json(array('success' => true, 'html' => $html));
     }
 
     /**
