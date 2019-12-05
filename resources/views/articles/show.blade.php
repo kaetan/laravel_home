@@ -4,7 +4,7 @@
 
 <?php if (!empty($article)) : ?>
 
-<div id="article-{{ $article->id }}" class="article container py-4">
+<div class="entity article container py-4" data-entity-type="article" data-entity-id="{{ $article->id }}">
     <div class="row">
         <div class="col-9 mx-auto">
             <a href="/" class="d-block mt-3">Back to index</a>
@@ -19,7 +19,8 @@
                 @csrf
                 <h5>Submit your comment!</h5>
                 <textarea class="form-control mb-3" name="text" rows="2"></textarea>
-                <input type="hidden" value="{{ $article->id }}" name="article_id">
+                <input type="hidden" value="article" name="entity_type">
+                <input type="hidden" value="{{ $article->id }}" name="entity_id">
                 <button class="btn btn-primary">Submit</button>
             </form>
         </div>

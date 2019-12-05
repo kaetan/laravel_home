@@ -10,6 +10,32 @@ use Auth;
 
 class CommentsController extends Controller
 {
+    // Массив сущностей, имеющих комменты
+    private $types = [
+        [
+            'type' => 'article',
+            'class' => Article::class,
+        ],
+        [
+            'type' => 'question',
+            'class' => Question::class,
+        ],
+    ];
+
+    /**
+     * Возвращает класс сущности, для которой выполняются операции с комментами
+     */
+    private function defineEntity($entityType) 
+    {
+        $class = '';
+        foreach ($this->types as $value) {
+            if ($value['type'] === $entityType) {
+                $class = $value['class'];
+            }
+        }
+        return $class;
+    }
+
     /**
      * Load more comments for the article
      *
@@ -18,14 +44,25 @@ class CommentsController extends Controller
      *
      * @return json object
      */
-    public function getComments(Request $request, $id)
+    public function getComments(Request $request)
     {
-        $article = Article::findOrFail($id);
+        // Получаем айди и тип сущности из запроса, а так же оффсет для загрузки комментов
+        $entityId = $request->id;
+        $entityType = $request->type;
         $offset = $request->offset;
+
+        // Получаем класс сущности
+        $class = $this->defineEntity($entityType);
+        if (empty($class)) {
+            return response()->json(array('success' => false, 'html' => ''));
+        }
+
+        // Получаем модель сущности и загружаем её комменты
+        $entity = $class::findOrFail($entityId);
         $limit = 10;
+        $comments = $entity->loadComments($offset, $limit);
 
-        $comments = $article->loadComments($offset, $limit);
-
+        // Генерируем хтмл с комментами и возвращаем его
         $html = CommentsHtmlService::getComments($comments);
 
         return response()->json(array('success' => true, 'html' => $html));
@@ -43,10 +80,15 @@ class CommentsController extends Controller
         $comment->text = $request->text;
         $comment->user()->associate(Auth::id());
 
-        $article = Article::findOrFail($request->article_id);
-        $article->comments()->save($comment);
+        // Получаем класс сущности по ее типу
+        $entityType = $request->entity_type;
+        $class = $this->defineEntity($entityType);
 
-        return redirect()->route('article.show', $article->id);
+        // Получаем модель сущности и сохраняем к ней коммент
+        $entity = $class::findOrFail($request->entity_id);
+        $entity->comments()->save($comment);
+
+        return redirect()->route($entityType . '.show', $entity->id);
     }
 
     /**

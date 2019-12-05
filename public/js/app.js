@@ -8,7 +8,10 @@ $(document).ready(function () {
         var noMoreComments = $(".no-more-comments");
 
         // получаем id статьи и id последнего отображаемого коммента
-        const article = $(".article").attr("id").slice(8);
+        const entity = $(".entity");
+        const entityId = entity.data('entity-id');
+        const entityType = entity.data('entity-type');
+
         var offset = $(".comments").children().last().attr("id").slice(8);
 
         // вешаем эвент на нажатие кнопки
@@ -22,8 +25,10 @@ $(document).ready(function () {
             $.ajax({
                 type: 'POST',
                 datatype: "json",
-                url: `/articles/${article}`,
+                url: `/comments/load`,
                 data: {
+                    type: entityType,
+                    id: entityId,
                     offset: offset,
                 },
 
@@ -44,8 +49,6 @@ $(document).ready(function () {
                         noMoreComments.removeClass('d-none');
                         noMoreComments.fadeIn(200);
                         noMoreComments.fadeOut(3000);
-
-                        console.log('and now hide mate');
                         loadBtn.addClass('d-none');
                     }
                 },

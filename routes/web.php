@@ -14,8 +14,7 @@
 Route::get('/', 'ArticlesController@index')->name('home');
 Route::get('/articles/{id}', 'ArticlesController@show')->name('article.show');
 
-// мне не нравится этот post роут с /articles/{id}, ведущий в CommentsController
-Route::post('/articles/{id}', 'CommentsController@getComments');
+Route::post('/comments/load', 'CommentsController@getComments');
 
 Route::post('/comment', 'CommentsController@store')->name('comment.post')->middleware('auth');
 
