@@ -51,8 +51,10 @@ class ArticlesController extends Controller
     public function show($id)
     {
         $article = Article::findOrFail($id);
+        // перенести получение комментов в модель
         $comments = $article->comments()->orderBy('id', 'desc')->take(5)->get();
-        
+
+        // проверку на пустые комменты перенести во вьюху
         $comments = !empty($comments) ? $comments : [];
 
         return view('articles.show')->with([

@@ -12,41 +12,31 @@ class CommentsController extends Controller
 {
     // Массив сущностей, имеющих комменты
     private $types = [
-        [
-            'type' => 'article',
-            'class' => Article::class,
-        ],
-        [
-            'type' => 'question',
-            'class' => Question::class,
-        ],
+        'article' => Article::class,
+        'question' => Question::class,
     ];
 
     /**
      * Возвращает класс сущности, для которой выполняются операции с комментами
      */
-    private function defineEntity($entityType) 
+    private function defineEntity($entityType)
     {
-        $class = '';
-        foreach ($this->types as $value) {
-            if ($value['type'] === $entityType) {
-                $class = $value['class'];
-            }
-        }
+        $class = $this->types[$entityType] ?? '';
         return $class;
     }
 
     /**
      * Load more comments for the article
      *
-     * @param int $id
-     * @param int $offset
+     * @param Request  $request
      *
      * @return json object
      */
     public function getComments(Request $request)
     {
         // Получаем айди и тип сущности из запроса, а так же оффсет для загрузки комментов
+        $params = $request->all();
+        // переделать - брать из парамс, сперва проверив наличие этих параметров. если не найден - ошибка
         $entityId = $request->id;
         $entityType = $request->type;
         $offset = $request->offset;
@@ -54,15 +44,19 @@ class CommentsController extends Controller
         // Получаем класс сущности
         $class = $this->defineEntity($entityType);
         if (empty($class)) {
+            // массив возвращаемых результатов определить выше, ретерн должен быть один
+            // весь метод обернуть в трай кэтч, в кэтч ошибки
             return response()->json(array('success' => false, 'html' => ''));
         }
 
         // Получаем модель сущности и загружаем её комменты
+        // файндОрФейл убрать, если энтити пустой - ошибка
         $entity = $class::findOrFail($entityId);
         $limit = 10;
         $comments = $entity->loadComments($offset, $limit);
 
         // Генерируем хтмл с комментами и возвращаем его
+        // назвать метод рендер()
         $html = CommentsHtmlService::getComments($comments);
 
         return response()->json(array('success' => true, 'html' => $html));

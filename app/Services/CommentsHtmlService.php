@@ -9,7 +9,7 @@ class CommentsHtmlService
 {
     public static function getComments($comments)
     {
-        $returnHtml = view('_partials\comments')->with('comments', $comments)->render();
+        $returnHtml = view('_partials\comments-block\comments-block')->with('comments', $comments)->render();
         return $returnHtml;
     }
 }

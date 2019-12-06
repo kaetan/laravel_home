@@ -1,12 +1,22 @@
-@foreach ($comments as $comment)
-<div id="comment-{{ $comment->id }}" class="comment card mb-3">
-    <div class="card-body">
-        <p class="card-text small text-muted">
-            {{ $comment->user->name }} wrote {{ $comment->created_at->diffForHumans() }}
-        </p>
-        <p class="card-text lead">
-            {{ $comment->text }}
-        </p>
+<div class="comments">
+    @include('_partials.comments-block.comments-block', ['comments' => $comments])
+</div>
+
+<?php if (!empty($comments)) : ?>
+<div class="d-flex flex-row align-items-center my-4">
+    <div class="">
+        <button class="btn btn-success js-load-comments ">Load more</button>
+    </div>
+    <div class="px-2">
+        <div id="loader" class="lds-ellipsis d-none">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div class="js-no-more-comments d-none">
+        <span class="text-success">No more comments to show!</span>
     </div>
 </div>
-@endforeach
+<?php endif; ?>
