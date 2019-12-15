@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    public function article()
+    public function entity()
     {
-        return $this->belongsTo('App\Article');
+        return $this->morphTo();
     }
+    
     public function user()
     {
         return $this->belongsTo('App\User');

@@ -6,60 +6,112 @@ use Illuminate\Http\Request;
 use App\Services\CommentsHtmlService;
 use App\Comment;
 use App\Article;
+use App\Question;
 use Auth;
+use Exception;
 
 class CommentsController extends Controller
 {
+    const EXCEPTION_ENTITY_ID = 'Incorrect entity id!';
+    const EXCEPTION_ENTITY_TYPE = 'Incorrect entity type!';
+    const EXCEPTION_OFFSET = 'Incorrect offset!';
+    const EXCEPTION_ENTITY_NOT_FOUND = 'No such entity!';
+    const EXCEPTION_COMMENTS_NOT_FOUND = 'No comments loaded!';
+    const EXCEPTION_COMMENTS_WRONG_TYPE = 'Comments were not passed as a proper collection!';
+    const EXCEPTION_COMMENTS_NOT_RENDERED = 'No comments rendered!';
+    const EXCEPTION_EMPTY_COMMENT = 'Comment body is empty!';
+
     // Массив сущностей, имеющих комменты
     private $types = [
         'article' => Article::class,
         'question' => Question::class,
     ];
 
+    // Количество комментов для ajax подгрузки
+    private $commentsLimit = 10;
+
     /**
-     * Возвращает класс сущности, для которой выполняются операции с комментами
+     * Возвращает сущность
      */
-    private function defineEntity($entityType)
+    private function getEntity($entityType, $entityId)
     {
+        $entity = '';
         $class = $this->types[$entityType] ?? '';
-        return $class;
+
+        // Получаем модель сущности
+        if ($class) {
+            $entity = $class::find($entityId);
+        }
+
+        return $entity;
     }
 
     /**
      * Load more comments for the article
      *
-     * @param Request  $request
+     * @param Request $request
      *
      * @return json object
      */
     public function getComments(Request $request)
     {
-        // Получаем айди и тип сущности из запроса, а так же оффсет для загрузки комментов
         $params = $request->all();
-        // переделать - брать из парамс, сперва проверив наличие этих параметров. если не найден - ошибка
-        $entityId = $request->id;
-        $entityType = $request->type;
-        $offset = $request->offset;
+        $limit = $this->commentsLimit;
+        $responseArray = [
+            'success' => false,
+            'errors' => '',
+            'html' => '',
+        ];
 
-        // Получаем класс сущности
-        $class = $this->defineEntity($entityType);
-        if (empty($class)) {
-            // массив возвращаемых результатов определить выше, ретерн должен быть один
-            // весь метод обернуть в трай кэтч, в кэтч ошибки
-            return response()->json(array('success' => false, 'html' => ''));
+        try {
+            // Берем параметры из запроса и прерываемся, если хоть один из них не передан или некорректен
+            $entityId = (int) $params['id'] ?? '';
+            $entityType = $params['type'] ?? '';
+            $offset = (int) $params['offset'] ?? '';
+
+            if (!is_int($entityId)) {
+                throw new Exception(self::EXCEPTION_ENTITY_ID);
+            }
+            if (!$entityType) {
+                throw new Exception(self::EXCEPTION_ENTITY_TYPE);
+            }
+            if (!is_int($offset)) {
+                throw new Exception(self::EXCEPTION_OFFSET);
+            }
+
+            // Запрашиваем объект сущности и прерываемся, если он не передан
+            $entity = $this->getEntity($entityType, $entityId);
+
+            if (empty($entity)) {
+                throw new Exception(self::EXCEPTION_ENTITY_NOT_FOUND);
+            }
+
+            // Запрашиваем комменты к сущности и прерываемся, если они не загружены или не являются коллекцией
+            $comments = $entity->loadComments($offset, $limit);
+
+            if (empty($comments)) {
+                throw new Exception(self::EXCEPTION_COMMENTS_NOT_FOUND);
+            }
+            if (!is_a($comments, 'Illuminate\Database\Eloquent\Collection')) {
+                throw new Exception(self::EXCEPTION_COMMENTS_WRONG_TYPE);
+            }
+
+            // Рендерим хтмл с комментами или прерываемся, если функция рендера ничего не вернула
+            $html = CommentsHtmlService::renderComments($comments);
+
+            if (empty($html)) {
+                throw new Exception(self::EXCEPTION_COMMENTS_NOT_RENDERED);
+            }
+
+            // Формируем массив ответа
+            $responseArray['success'] = true;
+            $responseArray['html'] = $html;
+
+        } catch(Exception $e) {
+            $responseArray['errors'] = $e->getMessage();
         }
 
-        // Получаем модель сущности и загружаем её комменты
-        // файндОрФейл убрать, если энтити пустой - ошибка
-        $entity = $class::findOrFail($entityId);
-        $limit = 10;
-        $comments = $entity->loadComments($offset, $limit);
-
-        // Генерируем хтмл с комментами и возвращаем его
-        // назвать метод рендер()
-        $html = CommentsHtmlService::getComments($comments);
-
-        return response()->json(array('success' => true, 'html' => $html));
+        return response()->json($responseArray);
     }
 
     /**
@@ -70,17 +122,42 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        $comment = new Comment();
-        $comment->text = $request->text;
-        $comment->user()->associate(Auth::id());
+        $params = $request->all();
 
-        // Получаем класс сущности по ее типу
-        $entityType = $request->entity_type;
-        $class = $this->defineEntity($entityType);
+        try {
+            $entityId = (int) $params['entity_id'] ?? '';
+            $entityType = $params['entity_type'] ?? '';
+            $commentText = $params['text'];
 
-        // Получаем модель сущности и сохраняем к ней коммент
-        $entity = $class::findOrFail($request->entity_id);
-        $entity->comments()->save($comment);
+            if (!is_int($entityId)) {
+                throw new Exception(self::EXCEPTION_ENTITY_ID);
+            }
+            if (!$entityType) {
+                throw new Exception(self::EXCEPTION_ENTITY_TYPE);
+            }
+            if (!$commentText) {
+                throw new Exception(self::EXCEPTION_EMPTY_COMMENT);
+            }
+
+            // Запрашиваем объект сущности и прерываемся, если он не передан
+            $entity = $this->getEntity($entityType, $entityId);
+
+            if (empty($entity)) {
+                throw new Exception(self::EXCEPTION_ENTITY_NOT_FOUND);
+            }
+
+            $comment = new Comment();
+            $comment->text = $commentText;
+            $comment->user()->associate(Auth::id());
+
+            // Получаем модель сущности и сохраняем к ней коммент
+            $entity->comments()->save($comment);
+
+        } catch(Exception $e) {
+            $error = $e->getMessage();
+            // Вот здесь пока не сделал нормальную обработку ошибок
+            return redirect()->back()->with(['error' => $error]);
+        }
 
         return redirect()->route($entityType . '.show', $entity->id);
     }

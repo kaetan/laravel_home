@@ -11,13 +11,21 @@
 |
 */
 
-Route::get('/', 'ArticlesController@index')->name('home');
+// Index route
+Route::get('/', 'PageController@welcome');
+
+// Routes for Articles
+Route::get('/articles', 'ArticlesController@index')->name('articles.index');
 Route::get('/articles/{id}', 'ArticlesController@show')->name('article.show');
 
-Route::post('/comments/load', 'CommentsController@getComments');
+// Routes for Questions
+Route::get('/questions', 'QuestionsController@index')->name('questions.index');
+Route::get('/questions/{id}', 'QuestionsController@show')->name('question.show');
 
+// Routes for Comments
+Route::post('/comments/load', 'CommentsController@getComments');
 Route::post('/comment', 'CommentsController@store')->name('comment.post')->middleware('auth');
 
+// Other routes
 Auth::routes();
-
-Route::get('/home', 'ArticlesController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');

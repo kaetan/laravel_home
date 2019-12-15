@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\CommentsHtmlService;
-use App\Article;
+use App\Question;
 use App\Comment;
 use App\User;
 
-class ArticlesController extends Controller
+class QuestionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,8 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
-        return view('articles.index')->with('items', $articles);
+        $questions = Question::all();
+        return view('questions.index')->with('items', $questions);
     }
 
     /**
@@ -50,14 +50,14 @@ class ArticlesController extends Controller
      */
     public function show($id)
     {
-        $article = Article::findOrFail($id);
+        $question = Question::findOrFail($id);
 
         // Amount of comments to get
         $amount = 5;
-        $comments = $article->getComments($amount);
+        $comments = $question->getComments($amount);
 
-        return view('articles.show')->with([
-            'item' => $article,
+        return view('questions.show')->with([
+            'item' => $question,
             'comments' => $comments,
         ]);
     }

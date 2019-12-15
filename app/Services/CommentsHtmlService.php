@@ -7,9 +7,14 @@ use App\Comment;
 
 class CommentsHtmlService
 {
-    public static function getComments($comments)
+    public static function renderComments($comments)
     {
-        $returnHtml = view('_partials\comments-block\comments-block')->with('comments', $comments)->render();
+        $returnHtml = '';
+
+        if ($comments) {
+            $returnHtml = view('_partials\comments-block\comments-block')->with('comments', $comments)->render();
+        }
+        
         return $returnHtml;
     }
 }

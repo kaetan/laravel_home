@@ -17,5 +17,10 @@ class DatabaseSeeder extends Seeder
             $comments = factory(App\Comment::class, 100)->make();
             $article->comments()->saveMany($comments);
         });
+
+        factory(App\Question::class, 5)->create()->each(function ($question) {
+            $comments = factory(App\Comment::class, 100)->make();
+            $question->comments()->saveMany($comments);
+        });
     }
 }

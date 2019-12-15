@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Entity;
 
-class Article extends Entity
+class Question extends Entity
 {
     /**
      * One-to-many relationship
