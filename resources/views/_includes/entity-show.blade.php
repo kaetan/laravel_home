@@ -10,13 +10,24 @@
     <hr>
     <div class="row">
         <div class="col-9 mx-auto">
-            <form action="{{ route('comment.post') }}" method="POST" class="my-3">
+            <form id="comment_form" action="{{ route('comment.post') }}" method="POST" class="my-3">
                 @csrf
                 <h5>Submit your comment!</h5>
                 <textarea class="form-control mb-3" name="text" rows="2"></textarea>
                 <input type="hidden" value="{{ $entityType }}" name="entity_type">
                 <input type="hidden" value="{{ $item->id }}" name="entity_id">
-                <button class="btn btn-primary">Submit</button>
+                <div class="d-flex flex-row align-items-center my-4">
+                    <button id="comment_submit_btn" class="btn btn-primary">Submit</button>
+                    {{-- TODO: анимашку в инклуды, продумать передачу цвета --}}
+                    <div class="px-2">
+                        <div id="loader-submit" class="lds-ellipsis lds-ellipsis--blue d-none">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

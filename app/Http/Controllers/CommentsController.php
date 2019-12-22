@@ -95,7 +95,7 @@ class CommentsController extends Controller
             if (!is_a($comments, 'Illuminate\Database\Eloquent\Collection')) {
                 throw new Exception(self::EXCEPTION_COMMENTS_WRONG_TYPE);
             }
-
+            
             // Рендерим хтмл с комментами или прерываемся, если функция рендера ничего не вернула
             $html = CommentsHtmlService::renderComments($comments);
 
@@ -128,6 +128,7 @@ class CommentsController extends Controller
             $entityId = (int) $params['entity_id'] ?? '';
             $entityType = $params['entity_type'] ?? '';
             $commentText = $params['text'];
+            $isAjax = $params['is_ajax'] ?? false;
 
             if (!is_int($entityId)) {
                 throw new Exception(self::EXCEPTION_ENTITY_ID);
@@ -152,11 +153,15 @@ class CommentsController extends Controller
 
             // Получаем модель сущности и сохраняем к ней коммент
             $entity->comments()->save($comment);
-
         } catch(Exception $e) {
             $error = $e->getMessage();
             // Вот здесь пока не сделал нормальную обработку ошибок
             return redirect()->back()->with(['error' => $error]);
+        }
+
+        if ($isAjax) {
+            $html = CommentsHtmlService::renderComments([$comment]);
+            return response()->json($html);
         }
 
         return redirect()->route($entityType . '.show', $entity->id);

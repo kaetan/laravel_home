@@ -5,6 +5,10 @@
     height: 32px;
 }
 
+.lds-ellipsis--blue {
+    width: 80px;
+}
+
 .lds-ellipsis div {
     position: absolute;
     top: 13px;
@@ -13,6 +17,10 @@
     border-radius: 50%;
     background: rgb(20, 148, 78);
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis--blue div {
+    background: #007bff;
 }
 
 .lds-ellipsis div:nth-child(1) {

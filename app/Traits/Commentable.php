@@ -1,10 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Entity extends Model
+trait Commentable
 {
     /**
      * Get comments for a certain entity on the initial load
