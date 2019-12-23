@@ -76,7 +76,7 @@ $(document).ready(function () {
         });
     }
 
-    // загрузка комментов после добавления нового
+    // Добавление коммента и его подгрузка
     const submitBtn = $("#comment_submit_btn");
 
     if (submitBtn.length) {
@@ -85,6 +85,7 @@ $(document).ready(function () {
         form.on('submit', function (event) {
             //
             event.preventDefault();
+            // искать значения ТОЛЬКО внутри ФОРМЫ
             var text = $('textarea[name="text"]').val();
             var entity_type = $('input[name="entity_type"]').val();
             var entity_id = $('input[name="entity_id"]').val();
@@ -122,7 +123,6 @@ $(document).ready(function () {
                     submitBtn.show();
                 }
             });
-
         });
     }
 });

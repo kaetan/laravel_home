@@ -13,6 +13,7 @@ var PATH = {
     },
     js: {
         src: [
+            // добавить сюда jquery
             './resources/js/bootstrap.min.js',
             './resources/js/toastr.min.js',
             './resources/js/comments.js',

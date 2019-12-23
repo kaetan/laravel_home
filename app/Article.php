@@ -8,6 +8,8 @@ use App\Traits\Commentable;
 class Article extends Entity
 {
     use Commentable;
+
+    // Тоже унести в трейт
     /**
      * One-to-many relationship
      */

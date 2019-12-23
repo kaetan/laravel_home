@@ -95,7 +95,7 @@ class CommentsController extends Controller
             if (!is_a($comments, 'Illuminate\Database\Eloquent\Collection')) {
                 throw new Exception(self::EXCEPTION_COMMENTS_WRONG_TYPE);
             }
-            
+
             // Рендерим хтмл с комментами или прерываемся, если функция рендера ничего не вернула
             $html = CommentsHtmlService::renderComments($comments);
 
@@ -130,6 +130,9 @@ class CommentsController extends Controller
             $commentText = $params['text'];
             $isAjax = $params['is_ajax'] ?? false;
 
+            // CommentCreatorService - Сервис, создающий комментарии.
+            // В нем инстанцировать класс CommentCreatorResult, в него через сеттеры заносить результат, объект коммент, и тд.
+            // Возвращать объект CommentCreatorResult.
             if (!is_int($entityId)) {
                 throw new Exception(self::EXCEPTION_ENTITY_ID);
             }
@@ -160,6 +163,7 @@ class CommentsController extends Controller
         }
 
         if ($isAjax) {
+            // Проверку вынести в renderComments, и если не массив, то загонять в массив
             $html = CommentsHtmlService::renderComments([$comment]);
             return response()->json($html);
         }
