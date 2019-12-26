@@ -5,6 +5,22 @@ namespace App\Traits;
 trait Commentable
 {
     /**
+     * One-to-many relationship
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Poly relationship
+     */
+    public function comments()
+    {
+        return $this->morphMany('App\Comment', 'entity');
+    }
+
+    /**
      * Get comments for a certain entity on the initial load
      * 
      * @param int amount

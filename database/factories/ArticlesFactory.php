@@ -10,5 +10,6 @@ $factory->define(Article::class, function (Faker $faker) {
     return [
         'name' => $faker->realText($maxNbChars = 30, $indexSize = 5),
         'text' => $faker->text(500),
+        'user_id' => User::all()->random()->id,
     ];
 });

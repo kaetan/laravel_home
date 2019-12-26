@@ -5,6 +5,8 @@
             <a href="{{ route($entityType . 's.index') }}" class="d-block mt-3">Back to {{ $entityName }}</a>
             <h1 class="text-center my-4">{{ $item->name }}</h1>
             <p class="lead">{{ $item->text}}</p>
+            <br>
+            <p class="small">{{ $item->user->name }}, {{ $item->created_at->diffForHumans() }}</p>
         </div>
     </div>
     <hr>
