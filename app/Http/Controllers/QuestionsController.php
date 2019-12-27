@@ -7,6 +7,7 @@ use App\Services\CommentsHtmlService;
 use App\Question;
 use App\Comment;
 use App\User;
+use Auth;
 
 class QuestionsController extends Controller
 {
@@ -82,7 +83,22 @@ class QuestionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Добавить всяческие проверки, try-catch, вывод ошибок, и все такое прочее
+        $params = $request->all();
+
+        $text = $params['text'];
+        $isAjax = $params['is_ajax'] ?? false;
+
+        $question = Question::findOrFail($id);
+        
+        if ($question->user->id != Auth::id()) {
+            return abort(403);
+        }
+
+        $question->text = $text;
+        $question->save();
+
+        return \Response::json(['text' => $text]);
     }
 
     /**

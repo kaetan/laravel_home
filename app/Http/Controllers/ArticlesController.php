@@ -7,6 +7,7 @@ use App\Services\CommentsHtmlService;
 use App\Article;
 use App\Comment;
 use App\User;
+use Auth;
 
 class ArticlesController extends Controller
 {
@@ -82,7 +83,22 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Добавить всяческие проверки, try-catch, вывод ошибок, и все такое прочее
+        $params = $request->all();
+
+        $text = $params['text'];
+        $isAjax = $params['is_ajax'] ?? false;
+
+        $article = Article::findOrFail($id);
+        
+        if ($article->user->id != Auth::id()) {
+            return abort(403);
+        }
+
+        $article->text = $text;
+        $article->save();
+
+        return \Response::json(['text' => $text]);
     }
 
     /**

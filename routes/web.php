@@ -17,10 +17,12 @@ Route::get('/', 'PageController@welcome');
 // Routes for Articles
 Route::get('/articles', 'ArticlesController@index')->name('articles.index');
 Route::get('/articles/{id}', 'ArticlesController@show')->name('article.show');
+Route::post('/articles/{id}/edit', 'ArticlesController@update')->name('article.update');
 
 // Routes for Questions
 Route::get('/questions', 'QuestionsController@index')->name('questions.index');
 Route::get('/questions/{id}', 'QuestionsController@show')->name('question.show');
+Route::post('/questions/{id}/edit', 'QuestionsController@update')->name('question.update');
 
 // Routes for Comments
 Route::post('/comments/load', 'CommentsController@getComments');

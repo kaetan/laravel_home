@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     const loadBtn = $(".js-load-comments");
 
     if (loadBtn.length) {

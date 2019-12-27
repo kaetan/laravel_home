@@ -2,11 +2,32 @@
     data-entity-id="{{ $item->id }}">
     <div class="row">
         <div class="col-9 mx-auto">
-            <a href="{{ route($entityType . 's.index') }}" class="d-block mt-3">Back to {{ $entityName }}</a>
             <h1 class="text-center my-4">{{ $item->name }}</h1>
-            <p class="lead">{{ $item->text}}</p>
-            <br>
-            <p class="small">{{ $item->user->name }}, {{ $item->created_at->diffForHumans() }}</p>
+
+            <p class="small"><span class="text-info">{{ $item->user->name }}</span>,
+                {{ $item->created_at->diffForHumans() }}</p>
+
+            <div class="js-entity-text">
+                <p class="lead">{{ $item->text}}</p>
+            </div>
+
+            @if (Auth::id() === $item->user->id)
+
+            <form id="entity-edit" action="{{ route($entityType . '.update', $item->id) }}" method="POST"
+                class="js-entity-edit d-none">
+                @csrf
+                <textarea class="form-control mb-3" name="text" rows="2">{{ $item->text}}</textarea>
+                <button id="entity_submit_btn" class="btn btn-link mt-3 js-entity-edit-submit">
+                    <i class="far fa-save mr-1"></i> Submit
+                </button>
+            </form>
+
+            <button class="btn btn-link js-entity-edit-btn">
+                <i class="fas fa-pencil-alt mr-1"></i> Edit
+            </button>
+
+            @endif
+
         </div>
     </div>
     <hr>
