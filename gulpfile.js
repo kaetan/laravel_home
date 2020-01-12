@@ -13,14 +13,21 @@ var PATH = {
     },
     js: {
         src: [
-            // добавить сюда jquery
+            './resources/js/jquery-3.4.1.min.js',
             './resources/js/bootstrap.min.js',
             './resources/js/toastr.min.js',
+            './resources/js/summernote-lite.js',
+
+            './resources/js/app.js',
             './resources/js/comments.js',
             './resources/js/entity-edit.js',
         ],
         build: './public/js/',
-    }
+    },
+    fonts: {
+        src: './resources/vendor/fonts',
+        build: './public/fonts/',
+    },
 };
 
 gulp.task('style:build', function () {
@@ -42,4 +49,9 @@ gulp.task('js:build', function () {
         .pipe(gulp.dest(PATH.js.build));
 });
 
-gulp.task('build', ['style:build', 'style_vendor:build', 'js:build']);
+gulp.task('fonts', function () {
+    gulp.src(PATH.fonts.src)
+        .pipe(gulp.dest(PATH.fonts.build));
+});
+
+gulp.task('build', ['style:build', 'style_vendor:build', 'js:build', 'fonts']);

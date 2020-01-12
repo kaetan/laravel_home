@@ -9,7 +9,7 @@
         <button class="btn btn-success js-load-comments ">Load more</button>
     </div>
     <div class="px-2">
-        <div id="loader" class="lds-ellipsis d-none">
+        <div class="lds-ellipsis d-none js-more-comments-loader">
             <div></div>
             <div></div>
             <div></div>

@@ -1,16 +1,5 @@
 $(document).ready(function () {
 
-    // Подгоняет высоту <textarea> под содержимое, пока что и здесь, и в отдельном методе. Сложно.
-    const $entityCheck = $(".entity");
-    if ($entityCheck.length) {
-        $('textarea').each(function () {
-            this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-        }).on('input', function () {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
-    }
-
     // Находим всю информацию о сущности
     const entity = $(".entity");
     const entityId = entity.data('entity-id');
@@ -18,14 +7,21 @@ $(document).ready(function () {
 
     // Блок с текстом сущности
     var $entityTextBlock = $('.js-entity-text');
+    var entityTextBlockValue = $entityTextBlock.html();
     // Форма для редактирования текста сущности
     var $entityForm = $('.js-entity-edit');
     // <textarea> из формы
     var $entityTextarea = $entityForm.find('textarea');
+    // Блок текста в summernote
+    var $summerTextBlock = $('.note-editable');
     // Кнопка вызова формы
     var $entityEditBtn = $('.js-entity-edit-btn');
     // Кнопка отправки формы
     var $entityEditSubmit = $('.js-entity-edit-submit');
+    // Кнопка отмены редактирования
+    var $entityEditCancel = $('.js-entity-edit-cancel');
+    // Анимация загрузки
+    var $entityEditLoader = $entityForm.find('.js-loader-submit');
 
     if ($entityEditBtn.length) {
         $entityEditBtn.on('click', function () {
@@ -35,8 +31,20 @@ $(document).ready(function () {
 
             // Отображаем форму, обновляем её высоту и ставим фокус в <textarea>
             $entityForm.removeClass('d-none');
-            textareaHeight($entityTextarea);
-            $entityTextarea.focus();
+
+
+            //textareaHeight($entityTextarea);
+            //$entityTextarea.focus();
+        });
+
+        $entityEditCancel.on('click', function (e) {
+            // При нажатии на кнопку отмены скрываем форму и возвращаем блок с текстом
+            e.preventDefault();
+            $summerTextBlock.html(entityTextBlockValue);
+
+            $entityForm.addClass('d-none');
+            $entityEditBtn.removeClass('d-none');
+            $entityTextBlock.removeClass('d-none');
         });
 
         $entityEditSubmit.on('click', function (e) {
@@ -64,14 +72,15 @@ $(document).ready(function () {
                 },
 
                 beforeSend: function () {
-                    //
+                    $entityEditLoader.removeClass('d-none');
                 },
 
                 success: function (data) {
                     if (data.text) {
                         // Вносим новый текст в блок текста
-                        $entityTextBlock.find('p').html(data.text);
+                        $entityTextBlock.html(data.text);
                         $entityTextarea.val(data.text);
+                        $summerTextBlock.html(data.text);
                         toastr.success('Successfully edited!');
                     } else {
                         //
@@ -83,18 +92,10 @@ $(document).ready(function () {
                     $entityForm.addClass('d-none');
                     $entityTextBlock.removeClass('d-none');
                     $entityEditBtn.removeClass('d-none');
+                    $entityEditLoader.addClass('d-none');
                 }
             });
         });
     }
 
-
-    function textareaHeight($textarea) {
-        $textarea.each(function () {
-            this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-        }).on('input', function () {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
-    }
 });

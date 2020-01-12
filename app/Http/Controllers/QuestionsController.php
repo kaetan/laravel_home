@@ -84,6 +84,7 @@ class QuestionsController extends Controller
     public function update(Request $request, $id)
     {
         // Добавить всяческие проверки, try-catch, вывод ошибок, и все такое прочее
+        // И вообще, надо сделать общий апдейт-сервис
         $params = $request->all();
 
         $text = $params['text'];

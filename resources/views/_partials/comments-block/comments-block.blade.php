@@ -4,7 +4,7 @@
         <p class="card-text small text-muted">
             {{ $comment->user->name }} wrote {{ $comment->created_at->diffForHumans() }}
         </p>
-        <p class="card-text lead">
+        <p class="card-text ">
             {{ $comment->text }}
         </p>
     </div>
