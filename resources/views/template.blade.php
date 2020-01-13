@@ -13,7 +13,6 @@
 
     <link rel="stylesheet" href="{{ asset('css/static.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-lite.css" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 

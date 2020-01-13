@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var gulpCopy = require('gulp-copy');
 var cssnano = require('gulp-cssnano');
 var sass = require('gulp-sass');
 var concat = require('gulp-concat');
@@ -6,6 +7,12 @@ var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 
 var PATH = {
+    copy: {
+        './resources/vendor/fonts/summernote.eot': "public/fonts/",
+        './resources/vendor/fonts/summernote.ttf': "public/fonts/",
+        './resources/vendor/fonts/summernote.woff': "public/fonts/",
+        './resources/vendor/fonts/summernote.woff2': "public/fonts/",
+    },
     style: {
         src: './resources/sass/styles/*.scss',
         vendor_src: './resources/vendor/styles/*.css',
@@ -26,7 +33,7 @@ var PATH = {
     },
     fonts: {
         src: './resources/vendor/fonts',
-        build: './public/fonts/',
+        build: './public/',
     },
 };
 
@@ -51,7 +58,16 @@ gulp.task('js:build', function () {
 
 gulp.task('fonts', function () {
     gulp.src(PATH.fonts.src)
-        .pipe(gulp.dest(PATH.fonts.build));
+        .pipe(gulpCopy('fonts1'))
+        .dest(PATH.fonts.build);
 });
 
-gulp.task('build', ['style:build', 'style_vendor:build', 'js:build', 'fonts']);
+gulp.task('copy', function() {
+    for (let from in PATH.copy) {
+        let to = PATH.copy[from];
+        gulp.src(from)
+            .pipe(gulp.dest(to));
+    }
+});
+
+gulp.task('build', ['style:build', 'style_vendor:build', 'js:build', 'copy']);
