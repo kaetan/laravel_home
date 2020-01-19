@@ -13,6 +13,7 @@
 
 // Index route
 Route::get('/', 'PageController@welcome');
+Route::view('/test', 'test');
 
 // Routes for Articles
 Route::get('/articles', 'ArticlesController@index')->name('articles.index');

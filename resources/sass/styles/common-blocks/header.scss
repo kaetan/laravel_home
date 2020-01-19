@@ -1,0 +1,24 @@
+.header {
+    font-family: 'Roboto', sans-serif;
+
+    border-bottom: 2px solid rgba(0, 0, 0, 0.45);
+}
+
+.header__wrapper {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.header__logo {
+    border-right: 1px solid rgba(0, 0, 0, 0.45);
+    padding-right: 15px;
+}
+
+.header__main-nav {
+    margin-left: 5px;
+}
+
+.header__personal {
+    margin-left: auto;
+}

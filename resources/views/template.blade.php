@@ -17,9 +17,13 @@
 </head>
 
 <body>
-    @include('_includes/topnav')
+    <div class="flex-wrapper">
+        @include('_includes/header')
 
-    @yield('content')
+        @yield('content')
+        
+        @include('_includes/footer')
+    </div>
 </body>
 
 </html>

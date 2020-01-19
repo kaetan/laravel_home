@@ -5,6 +5,8 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
+var watch = require('gulp-watch');
+var livereload = require('gulp-livereload');
 
 var PATH = {
     copy: {
@@ -14,9 +16,10 @@ var PATH = {
         './resources/vendor/fonts/summernote.woff2': "public/fonts/",
     },
     style: {
-        src: './resources/sass/styles/*.scss',
+        src: './resources/sass/styles/**/*',
         vendor_src: './resources/vendor/styles/*.css',
         build: './public/css/',
+        watch: './resources/sass/styles/**/*',
     },
     js: {
         src: [
@@ -62,12 +65,18 @@ gulp.task('fonts', function () {
         .dest(PATH.fonts.build);
 });
 
-gulp.task('copy', function() {
+gulp.task('copy', function () {
     for (let from in PATH.copy) {
         let to = PATH.copy[from];
         gulp.src(from)
             .pipe(gulp.dest(to));
     }
+});
+
+gulp.task('watch', function () {
+    watch(PATH.style.watch, function () {
+        gulp.start('style:build');
+    })
 });
 
 gulp.task('build', ['style:build', 'style_vendor:build', 'js:build', 'copy']);

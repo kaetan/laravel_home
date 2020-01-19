@@ -1,0 +1,44 @@
+.personal {
+
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+.personal__dropdown-link {
+    display: none;
+}
+
+.personal__dropdown-item {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 2px;
+
+    color: black;
+    text-decoration: none;
+
+    &:hover {
+        background-color: rgba(182, 182, 182, 0.247);
+    }
+}
+
+.personal__icon {
+    color: rgba(0, 0, 0, 0.5);
+    margin-right: 5px;
+}
+
+.personal__dropdown-item--form {
+    padding: 0;
+}
+
+.personal__dropdown-btn {
+    padding: 5px 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
