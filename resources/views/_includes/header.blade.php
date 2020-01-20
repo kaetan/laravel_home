@@ -1,5 +1,5 @@
 <header class="header">
-    <div class="header__wrapper container">
+    <div class="header__wrapper my-container">
         <div class="logo header__logo">
             <a href="{{ url('/') }}" class="logo__link">{{ config('app.name', 'Laravel') }}</a>
         </div>

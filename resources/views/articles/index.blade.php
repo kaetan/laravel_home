@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="articles ">
+<section class="articles my-container">
     @foreach ($items as $item)
         <div class="article-card articles__article-card">
             <div class="article-card__header">
