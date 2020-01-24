@@ -1,7 +1,7 @@
 <header class="header">
     <div class="header__wrapper my-container">
         <div class="logo header__logo">
-            <a href="{{ url('/') }}" class="logo__link">{{ config('app.name', 'Laravel') }}</a>
+            <a href="{{ url('/') }}"><img class="logo__img" src="img/logo.png" alt=""></a>
         </div>
 
         <nav class="main-nav header__main-nav">

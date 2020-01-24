@@ -1,44 +1,49 @@
 .personal {
-
     display: inline-block;
     padding-left: 10px;
     padding-right: 10px;
 
-}
-
-.personal__dropdown-link {
-    display: none;
-}
-
-.personal__dropdown-item {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 2px;
-
-    color: black;
-    text-decoration: none;
-
-    &:hover {
-        background-color: rgba(182, 182, 182, 0.247);
+    &__dropdown-list {
+        display: flex;
+        flex-direction: row;
     }
-}
 
-.personal__icon {
-    color: rgba(0, 0, 0, 0.5);
-    margin-right: 5px;
-}
+    &__dropdown-link {
+        display: none;
+    }
 
-.personal__dropdown-item--form {
-    padding: 0;
-}
+    &__dropdown-item {
+        display: inline-block;
+        padding: 0.8em;
 
-.personal__dropdown-btn {
-    padding: 5px 10px;
-    cursor: pointer;
-    background: none;
-    border: none;
+        color: rgb(46, 46, 46);
+        text-decoration: none;
 
-    &:hover {
-        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            background-color: rgb(60, 161, 166);
+        }
+    }
+
+    &__icon {
+        //color: rgba(0, 0, 0, 0.5);
+        margin-right: 5px;
+    }
+
+    &__dropdown-item--form {
+        padding: 0;
+    }
+
+    &__dropdown-btn {
+        padding: 0.8em;
+        cursor: pointer;
+        background: none;
+        border: none;
+
+        &:hover {
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+        }
     }
 }

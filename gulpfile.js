@@ -35,8 +35,12 @@ var PATH = {
         build: './public/js/',
     },
     fonts: {
-        src: './resources/vendor/fonts',
-        build: './public/',
+        src: './resources/vendor/fonts/**/*',
+        build: './public/fonts/',
+    },
+    img: {
+        src: './resources/img/**/*',
+        build: './public/img/',
     },
 };
 
@@ -59,18 +63,14 @@ gulp.task('js:build', function () {
         .pipe(gulp.dest(PATH.js.build));
 });
 
-gulp.task('fonts', function () {
+gulp.task('copy:fonts', function () {
     gulp.src(PATH.fonts.src)
-        .pipe(gulpCopy('fonts1'))
-        .dest(PATH.fonts.build);
+        .pipe(gulp.dest(PATH.fonts.build));
 });
 
-gulp.task('copy', function () {
-    for (let from in PATH.copy) {
-        let to = PATH.copy[from];
-        gulp.src(from)
-            .pipe(gulp.dest(to));
-    }
+gulp.task('copy:img', function () {
+    gulp.src(PATH.img.src)
+        .pipe(gulp.dest(PATH.img.build));
 });
 
 gulp.task('watch', function () {
@@ -79,4 +79,4 @@ gulp.task('watch', function () {
     })
 });
 
-gulp.task('build', ['style:build', 'style_vendor:build', 'js:build', 'copy']);
+gulp.task('build', ['style:build', 'style_vendor:build', 'js:build', 'copy:fonts', 'copy:img']);

@@ -1,5 +1,5 @@
 <footer class="footer">
-    <div class="footer-wrapper my-container">
+    <div class="footer__wrapper my-container">
         <nav class="main-nav footer__main-nav">
             <a href="" class="main-nav__dropdown-link">|||</a>
             <div class="main-nav__dropdown-list">
@@ -10,11 +10,11 @@
         </nav>
 
         <div class="logo footer__logo">
-            <a href="{{ url('/') }}" class="logo__link">{{ config('app.name', 'Laravel') }}</a>
+            <a href="{{ url('/') }}"><img class="logo__img" src="img/logo.png" alt=""></a>
         </div>
 
         <div class="footer__copyright">
-            <p class="footer__copyright-text">(c) 2020</p>
+            <p class="footer__copyright-text">г. Ъск, ул. Пушкина,<br>дом Колотушкина<br>(c) 2020</p>
         </div>
     </div>
 </footer>
