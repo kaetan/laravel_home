@@ -51,7 +51,7 @@
         flex-wrap: wrap;
         background: #ffffff;
 
-        &:not(:focus-within):not(:hover) {
+        &:not(:hover) {
             .articles__article-card {
                 filter: brightness(100%);
             }

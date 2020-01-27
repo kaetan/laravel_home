@@ -1,17 +1,8 @@
 <header class="header">
     <div class="header__wrapper my-container">
-        <div class="logo header__logo">
-            <a href="{{ url('/') }}"><img class="logo__img" src="img/logo.png" alt=""></a>
-        </div>
+        @include('_includes/common-blocks/logo', ['logoClass' => 'header__logo'])
 
-        <nav class="main-nav header__main-nav">
-            <a href="" class="main-nav__dropdown-link">|||</a>
-            <div class="main-nav__dropdown-list">
-                <a href="{{ route('articles.index') }}" class="main-nav__dropdown-item">Статьи</a>
-                <a href="{{ route('questions.index') }}" class="main-nav__dropdown-item">Вопросы</a>
-                <a href="#" class="main-nav__dropdown-item">О проекте</a>
-            </div>
-        </nav>
+        @include('_includes/common-blocks/main-nav', ['navClass' => 'header__main-nav'])
 
         <div class="personal header__personal">
             <a href="" class="personal__dropdown-link">|||</a>
