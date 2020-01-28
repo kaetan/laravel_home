@@ -1,5 +1,5 @@
 <div class="personal <?= !empty($personalClass) ? $personalClass : ''; ?>">
-    <a href="" class="personal__dropdown-link jsDropdownTrigger"><i class="personal__icon fas fa-user fa-3x"></i></a>
+    <div class="personal__dropdown-link jsDropdownTrigger"><i class="personal__icon fas fa-user fa-3x"></i></div>
     <div class="personal__dropdown-list jsDropdownList">
         @if (Auth::check())
             <a href="#" class="personal__dropdown-item">
