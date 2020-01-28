@@ -1,0 +1,48 @@
+// Body
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// Colors
+$blue: #3490dc;
+$indigo: #6574cd;
+$purple: #9561e2;
+$pink: #f66d9b;
+$red: #e3342f;
+$orange: #f6993f;
+$yellow: #ffed4a;
+$green: #38c172;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+
+// ---SCREEN WIDTHS---
+
+$screen-xs-min: 320px;
+$screen-sm-min: 640px;
+$screen-md-min: 768px;
+$screen-lg-min: 1024px;
+$screen-xl-min: 1280px;
+
+$screen-xs-max: $screen-xs-min - 1px;
+$screen-sm-max: $screen-md-min - 1px;
+$screen-md-max: $screen-lg-min - 1px;
+$screen-lg-max: $screen-xl-min - 1px;
+
+$breakpoints: (
+    xs: ( min: 0, max: $screen-xs-max ),
+    sm: ( min: $screen-sm-min, max: $screen-sm-max ),
+    md: ( min: $screen-md-min, max: $screen-md-max ),
+    lg: ( min: $screen-lg-min, max: $screen-lg-max ),
+    xl: ( min: $screen-xl-min )
+);
+
+$container-width: (
+    xs: 480px,
+    sm: 620px,
+    md: 720px,
+    lg: 1020px,
+    xl: 1020px,
+);

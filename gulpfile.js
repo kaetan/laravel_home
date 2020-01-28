@@ -30,6 +30,7 @@ var PATH = {
 
             './resources/js/app.js',
             './resources/js/comments.js',
+            './resources/js/myDropdown.js',
             './resources/js/entity-edit.js',
         ],
         build: './public/js/',

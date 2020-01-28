@@ -2,5 +2,32 @@
     &__img {
         max-width: 150px;
     }
+
+    @media (min-width: 0) and (max-width: 639px) {
+    }
+}
+
+.header .logo {
+    &__img {
+        max-width: 100px;
+    }
+
+    @media (min-width: 0) and (max-width: 639px) {
+        order: 2;
+        flex-basis: auto;
+
+        &__img {
+            max-width: 150px;
+        }
+    }
+}
+
+.footer .logo {
+    @media (min-width: 0) and (max-width: 639px) {
+        display: none;
+        &__img {
+            max-width: 150px;
+        }
+    }
 }
 
