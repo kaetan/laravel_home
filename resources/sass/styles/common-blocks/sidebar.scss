@@ -1,0 +1,17 @@
+.sidebar {
+    width: 100%;
+    padding-top: 45px;
+    text-align: center;
+
+    &__popular {
+        padding-top: 50px;
+    }
+
+    &__popular-header {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+}

@@ -53,13 +53,16 @@ class ArticlesController extends Controller
     {
         $article = Article::findOrFail($id);
 
-        // Amount of comments to get
         $amount = 5;
-        $comments = $article->getComments($amount);
+        $comments = $article->getComments();
+        $countComments = $comments->count();
+
+        $comments = $comments->take($amount);
 
         return view('articles.show')->with([
             'item' => $article,
             'comments' => $comments,
+            'countComments' => $countComments,
         ]);
     }
 
@@ -91,7 +94,7 @@ class ArticlesController extends Controller
         $isAjax = $params['is_ajax'] ?? false;
 
         $article = Article::findOrFail($id);
-        
+
         if ($article->user->id != Auth::id()) {
             return abort(403);
         }

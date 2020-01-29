@@ -28,7 +28,7 @@ class CommentsController extends Controller
     ];
 
     // Количество комментов для ajax подгрузки
-    private $commentsLimit = 10;
+    private $commentsLimit = 190;
 
     /**
      * Возвращает сущность

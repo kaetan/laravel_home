@@ -1,0 +1,72 @@
+.reply {
+    font-size: 18px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #ddd;
+
+    &__wrapper {
+        padding: 45px 30px;
+        background-color: rgba(245, 245, 245, 1);
+    }
+
+    &__header {
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    &__note {
+        padding-top: 20px;
+        margin: 0;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    &__label {
+        padding-top: 20px;
+    }
+
+    &__input {
+        padding: 10px;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 14px;
+        line-height: 18px;
+        border: 1px solid #ddd;
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__checkbox-wrapper {
+        display: flex;
+        align-items: center;
+        padding-top: 20px;
+    }
+    &__checkbox {
+        margin-right: 5px;
+    }
+    &__checkbox-label {
+        margin: 0;
+    }
+
+    &__btn {
+        align-self: flex-start;
+        margin-top: 20px;
+        padding: 13px 20px;
+        border: 3px solid #ffffff;
+        background-color: #3ca1a6;
+
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}

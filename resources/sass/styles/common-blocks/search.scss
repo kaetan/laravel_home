@@ -1,0 +1,49 @@
+.search {
+    padding-top: 60px;
+
+    text-align: center;
+
+    &__form {
+        display: flex;
+        align-items: center;
+        margin: 20px 10px 0 10px;
+        padding: 0;
+        border: 1px solid #ddd;
+    }
+
+    &__header {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    &__input {
+        flex-grow: 1;
+        height: 50px;
+        padding: 0 10px;
+        border: none;
+        &::placeholder {
+            font-style: italic;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__submit {
+        display: block;
+        margin-left: auto;
+        width: 50px;
+        height: 50px;
+
+        color: #3ca1a6;
+        background: none;
+        border: none;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+}

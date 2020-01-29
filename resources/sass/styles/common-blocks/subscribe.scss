@@ -1,0 +1,113 @@
+.subscribe {
+    background-color: rgba(245, 245, 245, 1);
+
+    // ELEMENTS
+    &__form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 60px 0;
+    }
+    &__header {
+        margin: 0 10px 0 0;
+        font-size: 30px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+    }
+    &__input {
+        flex-grow: 1;
+        height: 50px;
+        margin-right: 10px;
+        padding: 0 10px;
+        border: none;
+        &::placeholder {
+            font-style: italic;
+        }
+        &:focus {
+            outline: none;
+        }
+    }
+    &__btn {
+        padding: 13px 20px;
+        border: 3px solid #ffffff;
+        background-color: #3ca1a6;
+
+        color: #ffffff;
+        font-size: 16px;
+        line-height: 18px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    @media (min-width: 0) and (max-width: 767px) {
+        &__form {
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+            margin-top: 0;
+            padding: 55px 60px;
+        }
+
+        &__header {
+            margin-right: 0;
+            text-align: center;
+        }
+        &__input {
+            margin-right: 0;
+            margin-top: 23px;
+        }
+        &__btn {
+            margin-right: 0;
+            margin-top: 17px;
+        }
+    }
+}
+
+.subscribe__form_in_content {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 80px;
+    padding: 55px 60px;
+
+    .subscribe__header {
+        margin-right: 0;
+        text-align: center;
+    }
+    .subscribe__input {
+        margin-right: 0;
+        margin-top: 23px;
+    }
+    .subscribe__btn {
+        margin-right: 0;
+        margin-top: 17px;
+    }
+}
+
+.subscribe__form_in_sidebar {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 30px 25px;
+
+    .subscribe__header {
+        margin-right: 0;
+        text-align: center;
+        font-size: 18px;
+    }
+    .subscribe__input {
+        margin-right: 0;
+        margin-top: 20px;
+    }
+    .subscribe__btn {
+        margin-right: 0;
+        margin-top: 15px;
+    }
+}

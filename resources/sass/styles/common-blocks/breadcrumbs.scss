@@ -1,0 +1,17 @@
+.breadcrumbs {
+    padding: 20px 20px;
+
+    &__link {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 1);
+
+        &:hover {
+            text-decoration: none;
+            color: rgba(60, 161, 166, 1);
+        }
+    }
+
+    &__title {
+        color: rgba(0, 0, 0, 0.60);
+    }
+}

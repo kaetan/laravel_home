@@ -53,13 +53,17 @@ class QuestionsController extends Controller
     {
         $question = Question::findOrFail($id);
 
-        // Amount of comments to get
+
         $amount = 5;
-        $comments = $question->getComments($amount);
+        $comments = $question->getComments();
+        $countComments = $comments->count();
+
+        $comments = $comments->take($amount);
 
         return view('questions.show')->with([
             'item' => $question,
             'comments' => $comments,
+            'countComments' => $countComments,
         ]);
     }
 
@@ -91,7 +95,7 @@ class QuestionsController extends Controller
         $isAjax = $params['is_ajax'] ?? false;
 
         $question = Question::findOrFail($id);
-        
+
         if ($question->user->id != Auth::id()) {
             return abort(403);
         }
