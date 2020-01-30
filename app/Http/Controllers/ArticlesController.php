@@ -63,6 +63,7 @@ class ArticlesController extends Controller
             'item' => $article,
             'comments' => $comments,
             'countComments' => $countComments,
+            'sidebar' => 'sidebar',
         ]);
     }
 

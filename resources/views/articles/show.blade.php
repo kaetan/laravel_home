@@ -73,3 +73,8 @@
         </div>
     </div>
 @endsection
+
+@section('sidebar')
+    @php $sidebar = $sidebar ? $sidebar : 'sidebar'; @endphp
+    @include('_includes/common-blocks/' . $sidebar)
+@endsection

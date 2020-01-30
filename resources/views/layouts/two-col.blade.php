@@ -8,7 +8,7 @@
     </div>
 
     <div class="page-content__sidebar">
-        @include('_includes/common-blocks/sidebar')
+        @yield('sidebar')
     </div>
 
 @endsection
