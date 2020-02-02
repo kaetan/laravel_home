@@ -11,8 +11,8 @@ class CommentsHtmlService
     {
         $returnHtml = '';
 
-        if ($comments) {
-            $returnHtml = view('_partials\comments-block\comments-block')->with('comments', $comments)->render();
+        if (!empty($comments)) {
+            $returnHtml = view('_includes/common-blocks/comments-block')->with('comments', $comments)->render();
         }
         
         return $returnHtml;

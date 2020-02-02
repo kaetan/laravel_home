@@ -9811,6 +9811,17 @@ $(document).ready(function() {
                 $parentLists.css('visibility', 'hidden');
             }
         });
+
+        $(document).on('click', function(e) {
+            var $currentTarget = $(e.target);
+            var $lists = $('.jsDropdownList');
+
+            if (!$currentTarget.closest('.jsDropdownContainer').length) {
+                $lists.each(function() {
+                    $(this).css('visibility', 'hidden');
+                })
+            }
+        });
     }
 });
 

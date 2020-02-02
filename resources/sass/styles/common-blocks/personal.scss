@@ -5,15 +5,55 @@
     padding-right: 10px;
 
     text-align: center;
-
-    &__dropdown-list {
-        display: flex;
-        flex-direction: row;
+    
+    @media (min-width: 0) and (max-width: 767px) {
+        padding: 0;
+        margin: 0;
+        flex-basis: 50px;
+        order: 3;
     }
 
     &__dropdown-link {
         color: rgb(55, 55, 55);
         display: none;
+
+        @media (min-width: 0) and (max-width: 767px) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+
+            &:hover {
+                color: rgb(60, 161, 166);
+            }
+        }
+    }
+
+    &__dropdown-list {
+        display: flex;
+        flex-direction: row;
+
+        @media (min-width: 0) and (max-width: 767px) {
+            z-index: 2;
+            visibility: hidden;
+            position: absolute;
+            right: 0;
+            flex-direction: column;
+
+            text-align: right;
+
+            background: #b5e5eb;
+            -webkit-box-shadow: -5px 5px 10px -5px rgba(0,0,0,0.75);
+            -moz-box-shadow: -5px 5px 10px -5px rgba(0,0,0,0.75);
+            box-shadow: -5px 5px 10px -5px rgba(0,0,0,0.75);
+        }
+        @media (min-width: 0) and (max-width: 479px) {
+            width: 300px;
+        }
+        @media (min-width: 480px) and (max-width: 767px) {
+            width: 440px;
+        }
     }
 
     &__dropdown-item {
@@ -28,11 +68,23 @@
             color: rgb(255, 255, 255);
             background-color: rgb(60, 161, 166);
         }
+
+        @media (min-width: 0) and (max-width: 767px) {
+            font-size: 20px;
+            border-bottom: 1px solid #a7d0d4;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
     }
 
     &__icon {
-        //color: rgba(0, 0, 0, 0.5);
         margin-right: 5px;
+
+        @media (min-width: 0) and (max-width: 767px) {
+            margin: 0;
+        }
     }
 
     &__dropdown-item--form {
@@ -48,45 +100,6 @@
         &:hover {
             text-decoration: none;
             color: rgb(255, 255, 255);
-        }
-    }
-
-    @media (min-width: 0) and (max-width: 767px) {
-        padding: 0;
-        margin: 0;
-        flex-basis: 50px;
-        order: 3;
-
-        &__icon {
-            margin: 0;
-        }
-        &__dropdown-list {
-            z-index: 2;
-            visibility: hidden;
-            position: absolute;
-            right: 0;
-            flex-direction: column;
-            width: 200px;
-
-            text-align: right;
-
-            background: #b5e5eb;
-            -webkit-box-shadow: -5px 5px 10px -5px rgba(0,0,0,0.75);
-            -moz-box-shadow: -5px 5px 10px -5px rgba(0,0,0,0.75);
-            box-shadow: -5px 5px 10px -5px rgba(0,0,0,0.75);
-        }
-
-        &__dropdown-item {
-            font-size: 20px;
-        }
-
-        &__dropdown-link {
-            display: inline-block;
-            padding: 5px 0;
-
-            &:hover {
-                color: rgb(60, 161, 166);
-            }
         }
     }
 }
