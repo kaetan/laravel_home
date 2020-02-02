@@ -22,24 +22,24 @@ trait Commentable
 
     /**
      * Get comments for a certain entity on the initial load
-     * 
+     *
      * @param int amount
-     * 
+     *
      * @return Illuminate\Database\Eloquent\Collection
      */
-    public function getComments($amount) 
+    public function getComments()
     {
-        $comments = $this->comments()->orderBy('id', 'desc')->take($amount)->get();
+        $comments = $this->comments()->orderBy('id', 'desc')->get();
         return $comments;
     }
-    
+
     /**
      * Load comments for a certain entity (mainly via ajax)
-     * 
+     *
      * @param int id
      * @param int offset
      * @param int limit
-     * 
+     *
      * @return Illuminate\Database\Eloquent\Collection
      */
     public function loadComments($offset, $limit)

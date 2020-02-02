@@ -1,26 +1,18 @@
 .lds-ellipsis {
     display: inline-block;
     position: relative;
-    width: 102px;
-    height: 32px;
-}
-
-.lds-ellipsis--blue {
-    width: 80px;
+    width: 77px;
+    height: 21px;
 }
 
 .lds-ellipsis div {
     position: absolute;
-    top: 13px;
+    top: 4px;
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: rgb(20, 148, 78);
+    background: rgba(60, 161, 166, 1);
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
-}
-
-.lds-ellipsis--blue div {
-    background: #007bff;
 }
 
 .lds-ellipsis div:nth-child(1) {

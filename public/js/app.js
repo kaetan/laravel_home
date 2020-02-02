@@ -9685,7 +9685,7 @@ $(document).ready(function () {
         const entityId = entity.data('entity-id');
         const entityType = entity.data('entity-type');
 
-        var offset = $(".comments").find('.js-comment').last().attr("id").slice(8);
+        var offset = $(".js-comments-block").find('.js-comment').last().attr("id").slice(8);
 
         // вешаем эвент на нажатие кнопки
         $loadBtn.on('click', function () {
@@ -9706,29 +9706,28 @@ $(document).ready(function () {
                 },
 
                 beforeSend: function () {
-                    $loadBtn.hide();
-                    $loader.removeClass('d-none');
+                    $loadBtn.removeClass('flex').addClass('hidden');
+                    $loader.removeClass('hidden').addClass('flex');
                 },
 
                 success: function (data) {
                     if (data.html) {
                         // прикрепляем полученный html к блоку комментов
-                        $(".comments").append(data.html);
+                        $(".js-comments-block").append(data.html);
 
                         // обновляем id последнего отображаемого коммента и передаем его в кнопку
-                        offset = $('.comments').find('.js-comment').last().attr("id").slice(8);
+                        offset = $('.js-comments-block').find('.js-comment').last().attr("id").slice(8);
                         $loadBtn.attr('data-offset', offset);
+                        $loadBtn.removeClass('hidden').addClass('flex');
                     } else {
-                        $noMoreComments.removeClass('d-none');
+                        $noMoreComments.removeClass('hidden').addClass('flex');
                         $noMoreComments.fadeIn(200);
                         $noMoreComments.fadeOut(3000);
-                        $loadBtn.addClass('d-none');
                     }
                 },
 
                 complete: function () {
-                    $loader.addClass('d-none');
-                    $loadBtn.show();
+                    $loader.removeClass('flex').addClass('hidden');
                 }
             });
         });
@@ -9771,7 +9770,7 @@ $(document).ready(function () {
 
                 success: function (data) {
                     $form[0].reset();
-                    $('.comments').prepend(data);
+                    $('.js-comments-block').prepend(data);
                     toastr.success('Comment posted!');
                 },
 

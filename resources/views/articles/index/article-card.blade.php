@@ -1,5 +1,5 @@
 @if ($item)
-    <div class="article-card articles__article-card">
+    <div class="article-card <?= !empty($articleCardClass) ? $articleCardClass : ''; ?>">
         <div class="article-card__header">
             <a href="{{ route('article.show', $item->id) }}" class="">
                 <img src="https://source.unsplash.com/random/300x200" alt="" class="article-card__image">

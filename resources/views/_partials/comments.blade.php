@@ -1,6 +1,6 @@
 <?php  if (!empty($comments) && is_a($comments, 'Illuminate\Database\Eloquent\Collection')) : ?>
 
-<div class="comments">
+<div class="comments js-comments-block">
     @include('_partials.comments-block.comments-block', ['comments' => $comments])
 </div>
 
