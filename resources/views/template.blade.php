@@ -18,11 +18,11 @@
 
 <body>
     <div class="flex-wrapper">
-        @include('_includes/header')
+        @include('_partials.header')
 
         <div class="screen-width-bg screen-width-bg_whitesmoke">
             <div class="my-container">
-                @include('_includes/common-blocks/breadcrumbs')
+                @include('_partials/common-blocks/breadcrumbs')
 
             </div>
         </div>
@@ -33,11 +33,11 @@
 
         <div class="screen-width-bg screen-width-bg_whitesmoke">
             <div class="my-container">
-                @include('_includes/common-blocks/subscribe')
+                @include('_partials/common-blocks/subscribe')
             </div>
         </div>
 
-        @include('_includes/footer')
+        @include('_partials.footer')
     </div>
 </body>
 

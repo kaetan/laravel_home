@@ -9765,7 +9765,7 @@ $(document).ready(function () {
 
                 beforeSend: function () {
                     $submitBtn.hide();
-                    $loaderSub.removeClass('d-none');
+                    $loaderSub.removeClass('none');
                 },
 
                 success: function (data) {
@@ -9775,7 +9775,7 @@ $(document).ready(function () {
                 },
 
                 complete: function () {
-                    $loaderSub.addClass('d-none');
+                    $loaderSub.addClass('none');
                     $submitBtn.show();
                 }
             });
@@ -9804,24 +9804,25 @@ $(document).ready(function() {
             var $parentBlock = $currentTrigger.closest('.jsDropdownParent');
             var $parentLists = $parentBlock.find('.jsDropdownList');
 
-            if ($currentList.css('visibility') === 'hidden') {
-                $parentLists.css('visibility', 'hidden');
-                $currentList.css('visibility', 'visible');
+            if ($currentList.css('display') === 'none') {
+                $parentLists.addClass('none');
+                $currentList.removeClass('none');
+                $currentList.addClass('flex');
             } else {
-                $parentLists.css('visibility', 'hidden');
+                $parentLists.addClass('none');
             }
         });
 
-        $(document).on('click', function(e) {
-            var $currentTarget = $(e.target);
-            var $lists = $('.jsDropdownList');
-
-            if (!$currentTarget.closest('.jsDropdownContainer').length) {
-                $lists.each(function() {
-                    $(this).css('visibility', 'hidden');
-                })
-            }
-        });
+        // $(document).on('click', function(e) {
+        //     var $currentTarget = $(e.target);
+        //     var $lists = $('.jsDropdownList');
+        //
+        //     if (!$currentTarget.closest('.jsDropdownContainer').length) {
+        //         $lists.each(function() {
+        //             $(this).css('visibility', 'hidden');
+        //         })
+        //     }
+        // });
     }
 });
 

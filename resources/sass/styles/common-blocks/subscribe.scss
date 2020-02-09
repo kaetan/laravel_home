@@ -1,12 +1,11 @@
 .subscribe {
-    background-color: rgba(245, 245, 245, 1);
-
     // ELEMENTS
     &__form {
         display: flex;
         flex-direction: row;
         align-items: center;
         padding: 60px 0;
+        background-color: rgba(245, 245, 245, 1);
     }
     &__header {
         margin: 0 10px 0 0;
@@ -67,6 +66,10 @@
             margin-right: 0;
             margin-top: 17px;
         }
+    }
+
+    &_in_sidebar {
+        padding: 0 10px;
     }
 }
 

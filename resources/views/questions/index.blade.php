@@ -2,6 +2,6 @@
 
 @section('content')
 
-@include('_includes.entity-index', ['entityName' => 'Questions', 'entityType' => 'question'])
+@include('_partials.entity-index', ['entityName' => 'Questions', 'entityType' => 'question'])
 
 @endsection

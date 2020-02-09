@@ -12,9 +12,9 @@ class CommentsHtmlService
         $returnHtml = '';
 
         if (!empty($comments)) {
-            $returnHtml = view('_includes/common-blocks/comments-block')->with('comments', $comments)->render();
+            $returnHtml = view('_partials/common-blocks/comments-block')->with('comments', $comments)->render();
         }
-        
+
         return $returnHtml;
     }
 }

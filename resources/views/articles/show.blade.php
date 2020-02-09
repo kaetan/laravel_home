@@ -20,18 +20,43 @@
                 <span class="article__social-shares"><i class="fas fa-share-alt"></i>&nbsp;502317</span>
             </div>
 
-            <div class="article__text">
+            <div class="article__text js-entity-text">
                 {!! $item->text!!}
             </div>
 
+            @if (Auth::id() === $item->user->id)
+
+                <form id="entity-edit" action="{{ route('article.update', $item->id) }}" method="POST"
+                      class="article__edit js-entity-edit d-none">
+                    @csrf
+                    <textarea data-input-type="summernote" class="form-control my-3 d-none" name="text"
+                              rows="2">{!! $item->text !!}</textarea>
+                    <div class="d-flex flew-row align-items-center mt-3">
+                        <button id="entity_submit_btn" class="btn btn-link js-entity-edit-submit">
+                            <i class="fas fa-check mr-1"></i> Submit
+                        </button>
+                        <button id="entity_cancel_btn" class="btn btn-link js-entity-edit-cancel">
+                            <i class="fas fa-times mr-1"></i> Cancel
+                        </button>
+                        <div class="px-2">
+                            <div class="lds-ellipsis lds-ellipsis--blue d-none js-loader-submit">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <button class="btn btn-link js-entity-edit-btn">
+                    <i class="fas fa-pencil-alt mr-1"></i> Edit
+                </button>
+
+            @endif
+
             <div class="article__ps">
                 Понравилась статья? Будем рады вашему <a href="#reply" class="article__ps-link">отзыву</a>!
-            </div>
-
-            <div class="article__social">
-                <a href="#" class="article__social-link"><i class="fab fa-vk"></i></a>
-                <a href="#" class="article__social-link"><i class="fab fa-twitter"></i></a>
-                <span class="article__social-shares"><i class="fas fa-share-alt"></i>&nbsp;502317</span>
             </div>
 
             <div class="article__copyright">
@@ -51,7 +76,7 @@
                 </div>
             </div>
 
-            @include('_includes/common-blocks/subscribe', ['subscribeClass' => 'subscribe__form_in_content'])
+            @include('_partials/common-blocks/subscribe', ['subscribeClass' => '_in_content'])
 
             <div class="article__post-nav-block">
                 <a href="#" class="article__post-nav-prev">
@@ -64,10 +89,14 @@
                 </a>
             </div>
 
-            @include('_includes/common-blocks/reply', ['replyClass' => 'reply_in_article'])
+            @include('_partials/common-blocks/reply', [
+                'replyClass' => 'reply_in_article',
+                'entityType' => 'article',
+                'entityId' => $item->id,
+                ])
 
             <?php  if (!empty($comments) && is_a($comments, 'Illuminate\Database\Eloquent\Collection')) : ?>
-                @include('_includes/common-blocks/comments', ['commentsClass' => 'comments_in_article', 'comments' => $comments])
+                @include('_partials/common-blocks/comments', ['commentsClass' => 'comments_in_article', 'comments' => $comments])
             <?php  endif; ?>
 
         </div>
@@ -76,5 +105,5 @@
 
 @section('sidebar')
     @php $sidebar = $sidebar ? $sidebar : 'sidebar'; @endphp
-    @include('_includes/common-blocks/' . $sidebar)
+    @include('_partials/common-blocks/' . $sidebar)
 @endsection

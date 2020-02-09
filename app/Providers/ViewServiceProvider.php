@@ -25,7 +25,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(
-            '_includes/common-blocks/sidebar', 'App\Http\ViewComposers\SidebarComposer'
+            '_partials/common-blocks/sidebar', 'App\Http\ViewComposers\SidebarComposer'
         );
     }
 }

@@ -93,7 +93,7 @@ $(document).ready(function () {
 
                 beforeSend: function () {
                     $submitBtn.hide();
-                    $loaderSub.removeClass('d-none');
+                    $loaderSub.removeClass('none');
                 },
 
                 success: function (data) {
@@ -103,7 +103,7 @@ $(document).ready(function () {
                 },
 
                 complete: function () {
-                    $loaderSub.addClass('d-none');
+                    $loaderSub.addClass('none');
                     $submitBtn.show();
                 }
             });

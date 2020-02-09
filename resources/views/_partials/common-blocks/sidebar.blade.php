@@ -1,6 +1,6 @@
 <div class="sidebar">
 
-    @include('_includes/common-blocks/subscribe', ['subscribeClass' => 'subscribe__form_in_sidebar'])
+    @include('_partials/common-blocks/subscribe', ['subscribeClass' => '_in_sidebar'])
 
     <?php if (isset($topArticles)): ?>
         <div class="sidebar__popular">
@@ -13,6 +13,6 @@
         </div>
     <?php endif; ?>
 
-    @include('_includes/common-blocks/search', ['searchClass' => 'search_in_sidebar'])
+    @include('_partials/common-blocks/search', ['searchClass' => 'search_in_sidebar'])
 
 </div>
