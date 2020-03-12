@@ -23,11 +23,30 @@ class ParsingController extends Controller
 //            $response = $client->get($url);
             $response = $client->request('GET', $url);
 //            dd($response);
-            $data = (string) $response->getBody()->getContents();
+            $data = $response->getBody()->getContents();
+//            file_put_contents('testPregFile', $data);
+//            $fileContent = file_get_contents('testPregFile');
 //            $matches = [];
-//            preg_match()
-            dd($data);
+            $pregTest = preg_match('/data-wikidata-property-id=\"P569\".+title="(\d{1,2}\s[а-я]{4,8})">.+title="(\d{1,4})/', $data, $matches);
+//            dump($pregTest);
+//            dump($data);
+            dd($matches);
         }
         dd('nope');
     }
 }
+/**
+ * сентября
+ * октября
+ * января
+ * февраля
+ * марта
+ * апреля
+ * июня
+ * июля
+ * августа
+ * сентября
+ * октября
+ * ноября
+ * декабря
+*/
