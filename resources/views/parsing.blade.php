@@ -9,10 +9,9 @@
         <input type="submit" value="Узнать!">
     </form>
 
-    @if (isset($data))
+    @if (isset($result))
     <div class="parsingResult">
-        <p class="name">Имя: </p>
-        <p class="birthday">Дата рождения: </p>
+        <p class="birthday">Дата рождения: {{ $result['birthday'] ?? '' }}</p>
     </div>
     @endif
 @endsection
