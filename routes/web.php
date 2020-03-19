@@ -32,6 +32,7 @@ Route::post('/comment', 'CommentsController@store')->name('comment.post')->middl
 // Routes for Parsing
 Route::get('/parsing', 'ParsingController@index')->name('parsing.index');
 Route::post('/parsing', 'ParsingController@parse')->name('parsing.parse');
+Route::get('/parse-soups', 'ParsingController@parseSoups');
 
 // Other routes
 Auth::routes();
