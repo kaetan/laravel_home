@@ -3,11 +3,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Recipe;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class ParsingController extends Controller
 {
+    private $client;
+
     public function index()
     {
         return view('parsing');
@@ -31,10 +34,28 @@ class ParsingController extends Controller
 
     public function parseSoups()
     {
+        $categories = $this->getCategories();
+        $dishes = $this->getDishes($categories);
+
+        foreach ($dishes as $dish) {
+            $row = new Recipe();
+            $row->category = $dish['category'];
+            $row->title = $dish['title'];
+            $row->description = $dish['description'];
+            $row->picture_url = $dish['picture'];
+            $row->save();
+        }
+
+        dump('Okay');
+        dd($dishes);
+    }
+
+    private function getCategories()
+    {
         // Получаем начальную дату с точки входа
         $url = 'https://www.povarenok.ru/recipes/dishes/first/';
-        $client = new Client();
-        $response = $client->request('GET', $url);
+        $this->client = new Client();
+        $response = $this->client->request('GET', $url);
         $data = $response->getBody()->getContents();
 
         // Избавляемся от символов конца строки, чтобы не пришлось писать слишком негибкую регулярку
@@ -61,34 +82,52 @@ class ParsingController extends Controller
             ];
         }
 
-        dump($categories);
+        return $categories;
+    }
 
-        // Получим рецепты для одной категории
-        // Но сперва поспим немного
-        sleep(rand(2, 6));
-
-        $categoryUrl = $categories[0]['link'];
-        $categoryResponse = $client->request('GET', $categoryUrl);
-        $categoryData = $categoryResponse->getBody()->getContents();
-
-        $categoryDataTrimmed = str_replace(array("\r", "\n"), '', $categoryData);
-        $categoryConvertedData= mb_convert_encoding($categoryDataTrimmed, "utf-8", "windows-1251");
-
-        preg_match_all('/<article class="item-bl">.+src="(.+)".+<h2>.+">(.+)<\/a>.+<\/h2>.+article-breadcrumbs.+<\/div>.+<p>(.+)<\/p.+<\/article/Uumi', $categoryConvertedData, $categoryMatches);
-
-        $dishPictures = $categoryMatches[1];
-        $dishTitles = $categoryMatches[2];
-        $dishDescriptions = $categoryMatches[3];
-
+    private function getDishes($categories)
+    {
+        sleep(rand(2, 3));
         $dishes = [];
-        foreach ($dishTitles as $key => $dishTitle) {
-            $dishes[] = [
-                'title' => $dishTitle,
-                'description' => $dishDescriptions[$key],
-                'picture' => $dishPictures[$key],
-            ];
+
+        $count = 0;
+        foreach ($categories as $category) {
+            $categoryUrl = $category['link'];
+            $categoryResponse = $this->client->request('GET', $categoryUrl);
+            $categoryData = $categoryResponse->getBody()->getContents();
+
+            $categoryDataTrimmed = str_replace(array("\r", "\n"), '', $categoryData);
+            $categoryConvertedData= mb_convert_encoding($categoryDataTrimmed, "utf-8", "windows-1251");
+
+            preg_match_all('/<article class="item-bl">.+src="(.+)".+<h2>.+">(.+)<\/a>.+<\/h2>.+article-breadcrumbs.+<\/div>.+<p>(.+)<\/p.+<\/article/Uumi', $categoryConvertedData, $categoryMatches);
+
+            $dishPictures = $categoryMatches[1];
+            $dishTitles = $categoryMatches[2];
+            $dishDescriptions = $categoryMatches[3];
+
+            foreach ($dishTitles as $key => $dishTitle) {
+                $dishes[] = [
+                    'category' =>  $category['title'],
+                    'title' => $dishTitle,
+                    'description' => $dishDescriptions[$key],
+                    'picture' => $dishPictures[$key],
+                ];
+            }
+
+            sleep(1);
+
+            $count++;
+
+            if ($count > 2) {
+                break;
+            }
         }
 
-        dd($dishes);
+        return $dishes;
+    }
+
+    private function getProxies()
+    {
+
     }
 }
