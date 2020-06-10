@@ -37,3 +37,5 @@ Route::get('/parse-soups', 'ParsingController@parseSoups');
 // Other routes
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/watermark', 'ImagePkController@applyWm');
