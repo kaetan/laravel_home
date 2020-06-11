@@ -37,3 +37,5 @@ Route::post('/parsing', 'ParsingController@parse')->name('parsing.parse');
 // Other routes
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/watermark', 'ImagePkController@applyWm');
