@@ -39,3 +39,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/watermark', 'ImagePkController@applyWm');
+Route::get('/do-math', 'MathsController@doMathFromWeb');
