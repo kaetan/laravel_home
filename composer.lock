@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7e9c3ff735bf93819e9fe0f2536e1541",
+    "content-hash": "fcee1dfea59d2cd35c69851a020b289d",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -859,6 +859,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -905,7 +906,59 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "kaetan/image-pk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kaetan/ImagePk.git",
+                "reference": "14e282e55e3ffb3dcf5a1d8cfd3a18c005b2067a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kaetan/ImagePk/zipball/14e282e55e3ffb3dcf5a1d8cfd3a18c005b2067a",
+                "reference": "14e282e55e3ffb3dcf5a1d8cfd3a18c005b2067a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "ext-gd": "*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ImagePk\\Providers\\ImagePkServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "ImagePk": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kirill Prokudin",
+                    "email": "f4ntasm@gmail.com",
+                    "homepage": "https://github.com/kaetan",
+                    "role": "Developer"
+                }
+            ],
+            "description": "This is my homework",
+            "homepage": "https://github.com/kaetan",
+            "keywords": [
+                "image",
+                "watermark"
+            ],
+            "time": "2020-06-10T16:18:30+00:00"
         },
         {
             "name": "laravel/framework",
@@ -1924,17 +1977,17 @@
             ],
             "authors": [
                 {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com",
+                    "homepage": "https://benramsey.com"
+                },
+                {
                     "name": "Marijn Huizendveld",
                     "email": "marijn.huizendveld@gmail.com"
                 },
                 {
                     "name": "Thibaud Fabre",
                     "email": "thibaud@aztech.io"
-                },
-                {
-                    "name": "Ben Ramsey",
-                    "email": "ben@benramsey.com",
-                    "homepage": "https://benramsey.com"
                 }
             ],
             "description": "Formerly rhumsaa/uuid. A PHP 5.4+ library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).",
@@ -5469,7 +5522,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "kaetan/image-pk": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
