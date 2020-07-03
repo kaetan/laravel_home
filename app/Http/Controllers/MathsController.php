@@ -107,5 +107,7 @@ class MathsController extends Controller
                 self::CODE_MULT . ', ' .
                 self::CODE_DIV . '.');
         }
+
+        return true;
     }
 }

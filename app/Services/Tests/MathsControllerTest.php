@@ -26,6 +26,18 @@ class MathsControllerTest extends TestCase
         unset($this->subject);
     }
 
+    public function testMock()
+    {
+        $mocked = $this->createMock(MathsController::class);
+        $mocked->method('validateParams')
+            ->willReturn($this->customCallback('potato!'));
+        dd($mocked->validateParams(['a' => 1]));
+    }
+
+    public function customCallback($value)
+    {
+        return 'tasty ' . $value;
+    }
 
     public function testWrongAction(): void
     {
