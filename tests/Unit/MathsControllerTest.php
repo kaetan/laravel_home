@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Services\Tests;
+namespace Tests\Unit;
 
 
 use App\Exceptions\MathsException;
@@ -31,13 +31,15 @@ class MathsControllerTest extends TestCase
         $mocked = $this->createMock(MathsController::class);
         $mocked->method('validateParams')
             ->willReturn($this->customCallback('potato!'));
-        dd($mocked->validateParams(['a' => 1]));
+        $result = ($mocked->validateParams(['a' => 1]));
+        $this->assertEquals('tasty potato!', $result);
     }
 
     public function customCallback($value)
     {
         return 'tasty ' . $value;
     }
+
 
     public function testWrongAction(): void
     {
@@ -49,6 +51,10 @@ class MathsControllerTest extends TestCase
         $result = $this->subject->doMath($params);
     }
 
+    /**
+     * @group math
+     * @throws MathsException
+     */
     public function testSum(): void
     {
         $params['a'] = 5;
@@ -59,6 +65,20 @@ class MathsControllerTest extends TestCase
         $this->assertEquals(20, $result);
     }
 
+    public function testSum2(): void
+    {
+        $params['a'] = 6;
+        $params['b'] = 15;
+        $params['action'] = 'sum';
+
+        $result = $this->subject->doMath($params);
+        $this->assertEquals(21, $result);
+    }
+
+    /**
+     * @group math
+     * @throws MathsException
+     */
     public function testSub(): void
     {
         $params['a'] = 5;
