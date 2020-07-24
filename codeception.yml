@@ -6,8 +6,10 @@ suites:
         modules:
             enabled:
                 - WebDriver:
-                    url: http://127.0.0.1:8000/
+                    url: http://laravelhome.my
+                    window_size: maximize
                     browser: chrome
+                    port: 9515
                 - \Helper\Acceptance
 
         # add Codeception\Step\Retry trait to AcceptanceTester to enable retries
