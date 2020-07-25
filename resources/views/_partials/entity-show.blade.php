@@ -48,11 +48,11 @@
             <form class="js-comment-form" action="{{ route('comment.post') }}" method="POST" class="my-3">
                 @csrf
                 <h5>Submit your comment!</h5>
-                <textarea class="form-control mb-3" name="text" rows="2"></textarea>
+                <textarea id="comment-textarea" class="form-control mb-3" name="text" rows="2"></textarea>
                 <input type="hidden" value="{{ $entityType }}" name="entity_type">
                 <input type="hidden" value="{{ $item->id }}" name="entity_id">
                 <div class="d-flex flex-row align-items-center my-4">
-                    <button class="btn btn-primary js-comment-submit-btn">Submit</button>
+                    <button id="comment-submit" class="btn btn-primary js-comment-submit-btn">Submit</button>
                     {{-- TODO: анимашку в инклуды, продумать передачу цвета --}}
                     <div class="px-2">
                         <div class="lds-ellipsis lds-ellipsis--blue d-none js-loader-submit">

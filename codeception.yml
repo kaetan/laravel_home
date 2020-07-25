@@ -28,7 +28,7 @@ gherkin: []
 
 # additional paths
 paths:
-    tests: tests
+    tests: tests/Acceptance
     output: tests/_output
     data: tests/_data
     support: tests/_support
