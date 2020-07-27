@@ -5,13 +5,14 @@ namespace Tests\Acceptance;
 
 
 use Codeception\Util\Locator;
+use Illuminate\Support\Str;
 use Page\Acceptance\Login;
 
 class PostCommentCest
 {
     public function postComment(\AcceptanceTester $I, Login $login)
     {
-        $testComment = 'Hello, this is my acceptance test comment №' . rand();
+        $testComment = Str::random(40);
 
         // Логинимся
         $login->login('vasilyev@ngrd.ru', 'qqqqqqqq');
