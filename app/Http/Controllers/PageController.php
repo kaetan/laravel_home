@@ -10,4 +10,9 @@ class PageController extends Controller
     {
         return view('index');
     }
+
+    public function tremlo()
+    {
+        return view('tremlo');
+    }
 }

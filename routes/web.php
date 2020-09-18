@@ -13,6 +13,7 @@
 
 // Index route
 Route::get('/', 'PageController@welcome');
+Route::get('/tremlo', 'PageController@tremlo');
 Route::view('/test', 'test');
 
 // Routes for Articles
