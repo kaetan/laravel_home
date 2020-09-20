@@ -1,39 +1,23 @@
 const path = require("path");
+
 module.exports = {
     entry: "./resources/js/index.js",
-    mode: "development",
     output: {
-        filename: "index.js",
-        path: path.resolve(__dirname, 'public/js'),
+        path: path.join(__dirname, "/public/js"),
+        filename: "index.js"
     },
-    watch: true,
     module: {
         rules: [
             {
-                test: /\.m?js$/,
-                exclude: /(node_modules|bower_components)/,
+                test: /\.js$/,
+                exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader",
-                    options: {
-                        presets: ['@babel/env', '@babel/react']
-                    }
-                }
+                    loader: "babel-loader"
+                },
             },
             {
                 test: /\.css$/,
-                use: [
-                    "style-loader",
-                    {
-                        loader: "css-loader",
-                        options: {
-                            modules: true
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: ["file-loader"]
+                use: ["style-loader", "css-loader"]
             }
         ]
     }
